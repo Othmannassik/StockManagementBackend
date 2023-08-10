@@ -1,9 +1,6 @@
 package ma.cih.stockmanagementbackend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +12,10 @@ import java.time.LocalDate;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Livraison {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String BL;
+    private Long idLiv;
+    private String bonLiv;
     private LocalDate date;
     private int quantity;
+    @ManyToOne @JoinColumn(name = "idCmd")
+    private Commande commande;
 }

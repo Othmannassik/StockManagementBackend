@@ -1,9 +1,6 @@
 package ma.cih.stockmanagementbackend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +12,11 @@ import java.time.LocalDate;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Affectation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idAff;
     private LocalDate date;
     private String motif;
+    @ManyToOne @JoinColumn(name = "idProp")
+    private Proprietaire proprietaire;
+    @ManyToOne @JoinColumn(name = "idMat")
+    private Materiel materiel;
 }
