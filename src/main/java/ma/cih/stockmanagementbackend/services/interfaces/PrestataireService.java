@@ -1,0 +1,15 @@
+package ma.cih.stockmanagementbackend.services.interfaces;
+
+import ma.cih.stockmanagementbackend.entities.Prestataire;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface PrestataireService {
+    Prestataire addPrestataire(Prestataire prestataire);
+    Prestataire updatePrestataire(Long id);
+    void deletePrestataire(Long id);
+    Prestataire findPrestataire(Long id);
+    List<Prestataire> prestataireList();
+}
