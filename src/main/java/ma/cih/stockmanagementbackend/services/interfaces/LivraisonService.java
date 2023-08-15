@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LivraisonService {
     Livraison addLivraison(Livraison livraison);
-    Livraison updateLivraison(Long id);
+    Livraison updateLivraison(Livraison livraison);
     void deleteLivraison(Long id);
     Livraison findLivraison(Long id);
     List<Livraison> livraisonList();

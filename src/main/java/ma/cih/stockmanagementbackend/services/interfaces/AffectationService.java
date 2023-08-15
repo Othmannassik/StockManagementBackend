@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AffectationService {
     Affectation addAffectation(Affectation affectation);
-    Affectation updateAffectation(Long id);
+    Affectation updateAffectation(Affectation affectation);
     void deleteAffectation(Long id);
     Affectation findAffectation(Long id);
     List<Affectation> affectationList();

@@ -19,8 +19,7 @@ public class PrestataireServiceImpl implements PrestataireService {
     }
 
     @Override
-    public Prestataire updatePrestataire(Long id) {
-        Prestataire prestataire = prestataireRepository.findById(id).orElse(null);
+    public Prestataire updatePrestataire(Prestataire prestataire) {
         return prestataireRepository.save(prestataire);
     }
 

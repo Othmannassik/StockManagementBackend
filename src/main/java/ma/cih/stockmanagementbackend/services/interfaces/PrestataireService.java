@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PrestataireService {
     Prestataire addPrestataire(Prestataire prestataire);
-    Prestataire updatePrestataire(Long id);
+    Prestataire updatePrestataire(Prestataire prestataire);
     void deletePrestataire(Long id);
     Prestataire findPrestataire(Long id);
     List<Prestataire> prestataireList();

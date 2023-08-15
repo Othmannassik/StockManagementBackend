@@ -18,6 +18,7 @@ public class Commande {
     private String bonCmd;
     private LocalDate date;
     private int quantity;
+    @Enumerated(EnumType.STRING)
     private StatusCmd status;
     @ManyToOne @JoinColumn(name="idMat")
     private Materiel materiel;

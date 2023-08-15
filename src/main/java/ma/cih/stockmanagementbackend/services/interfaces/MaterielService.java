@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MaterielService {
     Materiel addMateriel(Materiel materiel);
-    Materiel updateMateriel(Long id);
+    Materiel updateMateriel(Materiel materiel);
     void deleteMateriel(Long id);
     Materiel findMateriel(Long id);
     List<Materiel> materielList();

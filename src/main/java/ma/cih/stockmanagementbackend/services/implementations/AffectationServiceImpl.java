@@ -19,8 +19,7 @@ public class AffectationServiceImpl implements AffectationService {
     }
 
     @Override
-    public Affectation updateAffectation(Long id) {
-        Affectation affectation = affectationRepository.findById(id).orElse(null);
+    public Affectation updateAffectation(Affectation affectation) {
         return affectationRepository.save(affectation);
     }
 

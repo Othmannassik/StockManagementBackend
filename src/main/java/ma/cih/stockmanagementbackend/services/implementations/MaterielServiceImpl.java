@@ -19,8 +19,7 @@ public class MaterielServiceImpl implements MaterielService {
     }
 
     @Override
-    public Materiel updateMateriel(Long id) {
-        Materiel materiel = materielRepository.findById(id).orElse(null);
+    public Materiel updateMateriel(Materiel materiel) {
         return materielRepository.save(materiel);
     }
 

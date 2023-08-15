@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TypeMaterielService {
     TypeMateriel addTypeMateriel(TypeMateriel typeMateriel);
-    TypeMateriel updateTypeMateriel(Long id);
+    TypeMateriel updateTypeMateriel(TypeMateriel typeMateriel);
     void deleteTypeMateriel(Long id);
     TypeMateriel findTypeMateriel(Long id);
     List<TypeMateriel> typeMaterielList();

@@ -19,8 +19,7 @@ public class LivraisonServiceImpl implements LivraisonService {
     }
 
     @Override
-    public Livraison updateLivraison(Long id) {
-        Livraison livraison = livraisonRepository.findById(id).orElse(null);
+    public Livraison updateLivraison(Livraison livraison) {
         return livraisonRepository.save(livraison);
     }
 

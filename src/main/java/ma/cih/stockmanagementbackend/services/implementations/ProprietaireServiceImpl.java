@@ -19,8 +19,7 @@ public class ProprietaireServiceImpl implements ProprietaireService {
     }
 
     @Override
-    public Proprietaire updateProprietaire(Long id) {
-        Proprietaire proprietaire = proprietaireRepository.findById(id).orElse(null);
+    public Proprietaire updateProprietaire(Proprietaire proprietaire) {
         return proprietaireRepository.save(proprietaire);
     }
 

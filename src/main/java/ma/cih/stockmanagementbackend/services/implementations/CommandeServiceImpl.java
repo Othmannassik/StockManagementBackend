@@ -19,8 +19,7 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande updateCommande(Long id) {
-        Commande commande = commandeRepository.findById(id).orElse(null);
+    public Commande updateCommande(Commande commande) {
         return commandeRepository.save(commande);
     }
 

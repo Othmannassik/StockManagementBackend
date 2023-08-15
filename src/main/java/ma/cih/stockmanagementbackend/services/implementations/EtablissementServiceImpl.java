@@ -19,8 +19,7 @@ public class EtablissementServiceImpl implements EtablissementService {
     }
 
     @Override
-    public Etablissement updateEtablissement(Long id) {
-        Etablissement etablissement = etablissementRepository.findById(id).orElse(null);
+    public Etablissement updateEtablissement(Etablissement etablissement) {
         return etablissementRepository.save(etablissement);
     }
 

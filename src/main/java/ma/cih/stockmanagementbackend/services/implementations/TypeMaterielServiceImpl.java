@@ -19,8 +19,7 @@ public class TypeMaterielServiceImpl implements TypeMaterielService {
     }
 
     @Override
-    public TypeMateriel updateTypeMateriel(Long id) {
-        TypeMateriel typeMateriel = typeMaterielRepository.findById(id).orElse(null);
+    public TypeMateriel updateTypeMateriel(TypeMateriel typeMateriel) {
         return typeMaterielRepository.save(typeMateriel);
     }
 

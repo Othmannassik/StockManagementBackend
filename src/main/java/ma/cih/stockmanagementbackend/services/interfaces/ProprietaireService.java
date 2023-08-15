@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProprietaireService {
     Proprietaire addProprietaire(Proprietaire proprietaire);
-    Proprietaire updateProprietaire(Long id);
+    Proprietaire updateProprietaire(Proprietaire proprietaire);
     void deleteProprietaire(Long id);
     Proprietaire findProprietaire(Long id);
     List<Proprietaire> proprietaireList();

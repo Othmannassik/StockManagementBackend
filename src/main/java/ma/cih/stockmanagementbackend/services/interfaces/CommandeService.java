@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommandeService {
     Commande addCommande(Commande commande);
-    Commande updateCommande(Long id);
+    Commande updateCommande(Commande commande);
     void deleteCommande(Long id);
     Commande findCommande(Long id);
     List<Commande> commandeList();
