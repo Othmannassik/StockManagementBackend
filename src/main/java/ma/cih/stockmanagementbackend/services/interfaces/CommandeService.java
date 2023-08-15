@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface CommandeService {
     Commande addCommande(Commande commande);
     Commande updateCommande(Long id);

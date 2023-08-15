@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface LivraisonService {
     Livraison addLivraison(Livraison livraison);
     Livraison updateLivraison(Long id);

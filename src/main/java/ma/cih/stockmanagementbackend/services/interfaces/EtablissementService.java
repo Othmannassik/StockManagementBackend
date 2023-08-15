@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface EtablissementService {
     Etablissement addEtablissement(Etablissement etablissement);
     Etablissement updateEtablissement(Long id);

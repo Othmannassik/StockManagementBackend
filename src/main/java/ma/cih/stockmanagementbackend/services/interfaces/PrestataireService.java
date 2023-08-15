@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface PrestataireService {
     Prestataire addPrestataire(Prestataire prestataire);
     Prestataire updatePrestataire(Long id);

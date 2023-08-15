@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface TypeMaterielService {
     TypeMateriel addTypeMateriel(TypeMateriel typeMateriel);
     TypeMateriel updateTypeMateriel(Long id);
