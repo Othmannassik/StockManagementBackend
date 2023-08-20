@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
+import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class CommandeController {
         return commandeService.commandeList();
     }
     @GetMapping("/{commandeId}")
-    public CommandeDTO getCommande(@PathVariable Long commandeId){
+    public CommandeDTO getCommande(@PathVariable Long commandeId) throws CommandeNotFoundException {
         return commandeService.findCommande(commandeId);
     }
 }

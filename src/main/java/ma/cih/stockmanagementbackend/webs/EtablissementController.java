@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class EtablissementController {
         return etablissementService.etablissementList();
     }
     @GetMapping("/{etablissementId}")
-    public EtablissementDTO getEtablissement(@PathVariable Long etablissementId){
+    public EtablissementDTO getEtablissement(@PathVariable Long etablissementId) throws EtablissementNotFoundException {
         return etablissementService.findEtablissement(etablissementId);
     }
 }

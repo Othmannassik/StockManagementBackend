@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
+import ma.cih.stockmanagementbackend.exceptions.ProprietaireNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.ProprietaireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ProprietaireController {
         return proprietaireService.proprietaireList();
     }
     @GetMapping("/{proprietaireId}")
-    public ProprietaireDTO getProprietaire(@PathVariable Long proprietaireId){
+    public ProprietaireDTO getProprietaire(@PathVariable Long proprietaireId) throws ProprietaireNotFoundException {
         return proprietaireService.findProprietaire(proprietaireId);
     }
 }

@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.entities.Etablissement;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.EtablissementMapper;
 import ma.cih.stockmanagementbackend.repositories.EtablissementRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
@@ -36,8 +37,9 @@ public class EtablissementServiceImpl implements EtablissementService {
     }
 
     @Override
-    public EtablissementDTO findEtablissement(Long id) {
-        Etablissement etablissement = etablissementRepository.findById(id).orElse(null);
+    public EtablissementDTO findEtablissement(Long id) throws EtablissementNotFoundException {
+        Etablissement etablissement = etablissementRepository.findById(id)
+                .orElseThrow(() -> new EtablissementNotFoundException(String.format("Etablissement with id = %s Not Found", id)));
         return etablissementMapper.toEtablissementDTO(etablissement);
     }
 

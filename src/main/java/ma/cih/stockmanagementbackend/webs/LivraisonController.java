@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
+import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class LivraisonController {
         return livraisonService.livraisonList();
     }
     @GetMapping("/{livraisonId}")
-    public LivraisonDTO getLivraison(@PathVariable Long livraisonId){
+    public LivraisonDTO getLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
         return livraisonService.findLivraison(livraisonId);
     }
 }

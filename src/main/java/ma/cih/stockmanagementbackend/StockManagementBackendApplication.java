@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend;
 
 import ma.cih.stockmanagementbackend.dtos.*;
 import ma.cih.stockmanagementbackend.enums.StatusCmd;
+import ma.cih.stockmanagementbackend.exceptions.*;
 import ma.cih.stockmanagementbackend.services.interfaces.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -69,8 +70,12 @@ public class StockManagementBackendApplication {
                         materielDTO.setQuantity(29);
                         materielDTO.setNumSerie(828730L);
                         materielDTO.setInventaireCih("KDL992");
-                        materielDTO.setTypeMaterielDTO(typeMaterielService.findTypeMateriel(2L));
-                        materielDTO.setEtablissementDTO(etablissementService.findEtablissement(1L));
+                        try {
+                            materielDTO.setTypeMaterielDTO(typeMaterielService.findTypeMateriel(2L));
+                            materielDTO.setEtablissementDTO(etablissementService.findEtablissement(1L));
+                        } catch (TypeMaterielNotFoundException | EtablissementNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         materielService.addMateriel(materielDTO);
                     });
 
@@ -80,8 +85,12 @@ public class StockManagementBackendApplication {
                         commandeDTO.setDate(LocalDate.now());
                         commandeDTO.setBonCmd(bc);
                         commandeDTO.setQuantity(4);
-                        commandeDTO.setMaterielDTO(materielService.findMateriel(1L));
-                        commandeDTO.setPrestataireDTO(prestataireService.findPrestataire(2L));
+                        try {
+                            commandeDTO.setMaterielDTO(materielService.findMateriel(1L));
+                            commandeDTO.setPrestataireDTO(prestataireService.findPrestataire(2L));
+                        } catch (MaterielNotFoundException | PrestataireNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         commandeDTO.setStatus(StatusCmd.CREATED);
                         commandeService.addCommande(commandeDTO);
                     });
@@ -92,7 +101,11 @@ public class StockManagementBackendApplication {
                         livraisonDTO.setDate(LocalDate.now());
                         livraisonDTO.setQuantity(3);
                         livraisonDTO.setBonLiv(bl);
-                        livraisonDTO.setCommandeDTO(commandeService.findCommande(2L));
+                        try {
+                            livraisonDTO.setCommandeDTO(commandeService.findCommande(2L));
+                        } catch (CommandeNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         livraisonService.addLivraison(livraisonDTO);
                     });
 
@@ -102,8 +115,12 @@ public class StockManagementBackendApplication {
                         AffectationDTO affectationDTO = new AffectationDTO();
                         affectationDTO.setDate(LocalDate.now());
                         affectationDTO.setMotif(motif);
-                        affectationDTO.setProprietaireDTO(proprietaireService.findProprietaire(2L));
-                        affectationDTO.setMaterielDTO(materielService.findMateriel(1L));
+                        try {
+                            affectationDTO.setProprietaireDTO(proprietaireService.findProprietaire(2L));
+                            affectationDTO.setMaterielDTO(materielService.findMateriel(1L));
+                        } catch (ProprietaireNotFoundException | MaterielNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         affectationService.addAffectation(affectationDTO);
                     });
         };

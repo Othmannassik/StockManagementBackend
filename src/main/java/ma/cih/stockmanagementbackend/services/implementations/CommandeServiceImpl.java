@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.entities.Commande;
+import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.CommandeMapper;
 import ma.cih.stockmanagementbackend.repositories.CommandeRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
@@ -36,8 +37,9 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public CommandeDTO findCommande(Long id) {
-        Commande commande = commandeRepository.findById(id).orElse(null);
+    public CommandeDTO findCommande(Long id) throws CommandeNotFoundException {
+        Commande commande = commandeRepository.findById(id)
+                .orElseThrow(() -> new CommandeNotFoundException(String.format("Commande with id = %s Not Found", id)));
         return commandeMapper.toCommandeDTO(commande);
     }
 

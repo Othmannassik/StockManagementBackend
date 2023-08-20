@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
 import ma.cih.stockmanagementbackend.entities.Materiel;
+import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.MaterielRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
@@ -36,8 +37,9 @@ public class MaterielServiceImpl implements MaterielService {
     }
 
     @Override
-    public MaterielDTO findMateriel(Long id) {
-        Materiel materiel = materielRepository.findById(id).orElse(null);
+    public MaterielDTO findMateriel(Long id) throws MaterielNotFoundException {
+        Materiel materiel = materielRepository.findById(id)
+                .orElseThrow(() -> new MaterielNotFoundException(String.format("Materiel with id = %s Not Found", id)));
         return materielMapper.toMaterielDTO(materiel);
     }
 

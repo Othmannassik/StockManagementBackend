@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
+import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class MaterielController {
         return materielService.materielList();
     }
     @GetMapping("/{materielId}")
-    public MaterielDTO getMateriel(@PathVariable Long materielId){
+    public MaterielDTO getMateriel(@PathVariable Long materielId) throws MaterielNotFoundException {
         return materielService.findMateriel(materielId);
     }
 }

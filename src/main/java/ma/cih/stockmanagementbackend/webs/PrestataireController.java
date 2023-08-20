@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
+import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class PrestataireController {
         return prestataireService.prestataireList();
     }
     @GetMapping("/{prestataireId}")
-    public PrestataireDTO getPrestataire(@PathVariable Long prestataireId){
+    public PrestataireDTO getPrestataire(@PathVariable Long prestataireId) throws PrestataireNotFoundException {
         return prestataireService.findPrestataire(prestataireId);
     }
 }

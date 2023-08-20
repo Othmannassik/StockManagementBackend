@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.entities.Livraison;
+import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.LivraisonMapper;
 import ma.cih.stockmanagementbackend.repositories.LivraisonRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
@@ -36,8 +37,9 @@ public class LivraisonServiceImpl implements LivraisonService {
     }
 
     @Override
-    public LivraisonDTO findLivraison(Long id) {
-        Livraison livraison = livraisonRepository.findById(id).orElse(null);
+    public LivraisonDTO findLivraison(Long id) throws LivraisonNotFoundException {
+        Livraison livraison = livraisonRepository.findById(id)
+                .orElseThrow(() -> new LivraisonNotFoundException(String.format("Livraison with id = %s Not Found", id)));
         return livraisonMapper.toLivraisonDTO(livraison);
     }
 

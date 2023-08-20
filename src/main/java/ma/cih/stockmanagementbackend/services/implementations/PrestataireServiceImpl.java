@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.PrestataireMapper;
 import ma.cih.stockmanagementbackend.repositories.PrestataireRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
@@ -36,8 +37,9 @@ public class PrestataireServiceImpl implements PrestataireService {
     }
 
     @Override
-    public PrestataireDTO findPrestataire(Long id) {
-        Prestataire prestataire = prestataireRepository.findById(id).orElse(null);
+    public PrestataireDTO findPrestataire(Long id) throws PrestataireNotFoundException {
+        Prestataire prestataire = prestataireRepository.findById(id)
+                .orElseThrow(() -> new PrestataireNotFoundException(String.format("Prestataire with id = %s Not Found", id)));
         return prestataireMapper.toPrestataireDTO(prestataire);
     }
 

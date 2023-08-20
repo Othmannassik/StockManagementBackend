@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.AffectationDTO;
 import ma.cih.stockmanagementbackend.entities.Affectation;
+import ma.cih.stockmanagementbackend.exceptions.AffectationNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.AffectationMapper;
 import ma.cih.stockmanagementbackend.repositories.AffectationRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.AffectationService;
@@ -36,8 +37,9 @@ public class AffectationServiceImpl implements AffectationService {
     }
 
     @Override
-    public AffectationDTO findAffectation(Long id) {
-        Affectation affectation = affectationRepository.findById(id).orElse(null);
+    public AffectationDTO findAffectation(Long id) throws AffectationNotFoundException {
+        Affectation affectation = affectationRepository.findById(id)
+                .orElseThrow(() -> new AffectationNotFoundException(String.format("Affectation with id = %s Not Found", id)));
         return affectationMapper.toAffectationDTO(affectation);
     }
 

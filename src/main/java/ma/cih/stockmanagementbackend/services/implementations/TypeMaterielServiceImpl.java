@@ -2,7 +2,9 @@ package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
+import ma.cih.stockmanagementbackend.entities.Proprietaire;
 import ma.cih.stockmanagementbackend.entities.TypeMateriel;
+import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.TypeMaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.TypeMaterielRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
@@ -36,8 +38,9 @@ public class TypeMaterielServiceImpl implements TypeMaterielService {
     }
 
     @Override
-    public TypeMaterielDTO findTypeMateriel(Long id) {
-        TypeMateriel typeMateriel = typeMaterielRepository.findById(id).orElse(null);
+    public TypeMaterielDTO findTypeMateriel(Long id) throws TypeMaterielNotFoundException {
+        TypeMateriel typeMateriel = typeMaterielRepository.findById(id)
+                .orElseThrow(() -> new TypeMaterielNotFoundException(String.format("TypeMateriel with id = %s Not Found", id)));
         return typeMaterielMapper.toTypeMaterielDTO(typeMateriel);
     }
 

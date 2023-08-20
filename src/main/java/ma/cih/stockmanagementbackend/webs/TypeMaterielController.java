@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
+import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class TypeMaterielController {
         return typeMaterielService.typeMaterielList();
     }
     @GetMapping("/{typeMaterielId}")
-    public TypeMaterielDTO getTypeMateriel(@PathVariable Long typeMaterielId){
+    public TypeMaterielDTO getTypeMateriel(@PathVariable Long typeMaterielId) throws TypeMaterielNotFoundException {
         return typeMaterielService.findTypeMateriel(typeMaterielId);
     }
 }
