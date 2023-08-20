@@ -1,7 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
-import ma.cih.stockmanagementbackend.entities.Etablissement;
+import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,24 +13,24 @@ import java.util.List;
 public class EtablissementController {
     private EtablissementService etablissementService;
     @PostMapping()
-    public Etablissement saveEtablissement(@RequestBody Etablissement etablissement){
-        return etablissementService.addEtablissement(etablissement);
+    public EtablissementDTO saveEtablissement(@RequestBody EtablissementDTO etablissementDTO){
+        return etablissementService.addEtablissement(etablissementDTO);
     }
     @PutMapping("/{etablissementId}")
-    public Etablissement updateEtablissement(@RequestBody Etablissement etablissement, @PathVariable Long etablissementId){
-        etablissement.setIdEtb(etablissementId);
-        return etablissementService.updateEtablissement(etablissement);
+    public EtablissementDTO updateEtablissement(@RequestBody EtablissementDTO etablissementDTO, @PathVariable Long etablissementId){
+        etablissementDTO.setIdEtb(etablissementId);
+        return etablissementService.updateEtablissement(etablissementDTO);
     }
     @DeleteMapping("/{etablissementId}")
     public void deleteEtablissement(@PathVariable Long etablissementId){
         etablissementService.deleteEtablissement(etablissementId);
     }
     @GetMapping()
-    public List<Etablissement> etablissementList(){
+    public List<EtablissementDTO> etablissementList(){
         return etablissementService.etablissementList();
     }
     @GetMapping("/{etablissementId}")
-    public Etablissement getEtablissement(@PathVariable Long etablissementId){
+    public EtablissementDTO getEtablissement(@PathVariable Long etablissementId){
         return etablissementService.findEtablissement(etablissementId);
     }
 }

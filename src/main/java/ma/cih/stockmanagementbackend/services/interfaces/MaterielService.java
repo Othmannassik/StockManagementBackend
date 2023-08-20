@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Materiel;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
 
 import java.util.List;
 
 public interface MaterielService {
-    Materiel addMateriel(Materiel materiel);
-    Materiel updateMateriel(Materiel materiel);
+    MaterielDTO addMateriel(MaterielDTO materielDTO);
+    MaterielDTO updateMateriel(MaterielDTO materielDTO);
     void deleteMateriel(Long id);
-    Materiel findMateriel(Long id);
-    List<Materiel> materielList();
+    MaterielDTO findMateriel(Long id);
+    List<MaterielDTO> materielList();
 }

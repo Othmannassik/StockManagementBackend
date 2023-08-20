@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Etablissement;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 
 import java.util.List;
 
 public interface EtablissementService {
-    Etablissement addEtablissement(Etablissement etablissement);
-    Etablissement updateEtablissement(Etablissement etablissement);
+    EtablissementDTO addEtablissement(EtablissementDTO etablissementDTO);
+    EtablissementDTO updateEtablissement(EtablissementDTO etablissementDTO);
     void deleteEtablissement(Long id);
-    Etablissement findEtablissement(Long id);
-    List<Etablissement> etablissementList();
+    EtablissementDTO findEtablissement(Long id);
+    List<EtablissementDTO> etablissementList();
 }

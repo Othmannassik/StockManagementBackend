@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.AffectationDTO;
 import ma.cih.stockmanagementbackend.entities.Affectation;
+import ma.cih.stockmanagementbackend.mappers.AffectationMapper;
 import ma.cih.stockmanagementbackend.repositories.AffectationRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.AffectationService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class AffectationServiceImpl implements AffectationService {
     private AffectationRepository affectationRepository;
+    private AffectationMapper affectationMapper;
     @Override
-    public Affectation addAffectation(Affectation affectation) {
-        return affectationRepository.save(affectation);
+    public AffectationDTO addAffectation(AffectationDTO affectationDTO) {
+        Affectation affectation = affectationMapper.toAffectation(affectationDTO);
+        affectationRepository.save(affectation);
+        return affectationDTO;
     }
 
     @Override
-    public Affectation updateAffectation(Affectation affectation) {
-        return affectationRepository.save(affectation);
+    public AffectationDTO updateAffectation(AffectationDTO affectationDTO) {
+        Affectation affectation = affectationMapper.toAffectation(affectationDTO);
+        affectationRepository.save(affectation);
+        return affectationDTO;
     }
 
     @Override
@@ -29,12 +36,15 @@ public class AffectationServiceImpl implements AffectationService {
     }
 
     @Override
-    public Affectation findAffectation(Long id) {
-        return affectationRepository.findById(id).orElse(null);
+    public AffectationDTO findAffectation(Long id) {
+        Affectation affectation = affectationRepository.findById(id).orElse(null);
+        return affectationMapper.toAffectationDTO(affectation);
     }
 
     @Override
-    public List<Affectation> affectationList() {
-        return affectationRepository.findAll();
+    public List<AffectationDTO> affectationList() {
+        return affectationRepository.findAll().stream()
+                .map(aff -> affectationMapper.toAffectationDTO(aff))
+                .toList();
     }
 }

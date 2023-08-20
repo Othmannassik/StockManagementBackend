@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
 import ma.cih.stockmanagementbackend.entities.Proprietaire;
+import ma.cih.stockmanagementbackend.mappers.ProprietaireMapper;
 import ma.cih.stockmanagementbackend.repositories.ProprietaireRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.ProprietaireService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class ProprietaireServiceImpl implements ProprietaireService {
     private ProprietaireRepository proprietaireRepository;
+    private ProprietaireMapper proprietaireMapper;
     @Override
-    public Proprietaire addProprietaire(Proprietaire proprietaire) {
-        return proprietaireRepository.save(proprietaire);
+    public ProprietaireDTO addProprietaire(ProprietaireDTO proprietaireDTO) {
+        Proprietaire proprietaire = proprietaireMapper.toProprietaire(proprietaireDTO);
+        proprietaireRepository.save(proprietaire);
+        return proprietaireDTO;
     }
 
     @Override
-    public Proprietaire updateProprietaire(Proprietaire proprietaire) {
-        return proprietaireRepository.save(proprietaire);
+    public ProprietaireDTO updateProprietaire(ProprietaireDTO proprietaireDTO) {
+        Proprietaire proprietaire = proprietaireMapper.toProprietaire(proprietaireDTO);
+        proprietaireRepository.save(proprietaire);
+        return proprietaireDTO;
     }
 
     @Override
@@ -29,12 +36,15 @@ public class ProprietaireServiceImpl implements ProprietaireService {
     }
 
     @Override
-    public Proprietaire findProprietaire(Long id) {
-        return proprietaireRepository.findById(id).orElse(null);
+    public ProprietaireDTO findProprietaire(Long id) {
+        Proprietaire proprietaire = proprietaireRepository.findById(id).orElse(null);
+        return proprietaireMapper.toProprietaireDTO(proprietaire);
     }
 
     @Override
-    public List<Proprietaire> proprietaireList() {
-        return proprietaireRepository.findAll();
+    public List<ProprietaireDTO> proprietaireList() {
+        return proprietaireRepository.findAll().stream()
+                .map(prop -> proprietaireMapper.toProprietaireDTO(prop))
+                .toList();
     }
 }

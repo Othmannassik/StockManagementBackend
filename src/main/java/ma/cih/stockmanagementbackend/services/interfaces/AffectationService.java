@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Affectation;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.AffectationDTO;
 
 import java.util.List;
 
 public interface AffectationService {
-    Affectation addAffectation(Affectation affectation);
-    Affectation updateAffectation(Affectation affectation);
+    AffectationDTO addAffectation(AffectationDTO affectationDTO);
+    AffectationDTO updateAffectation(AffectationDTO affectationDTO);
     void deleteAffectation(Long id);
-    Affectation findAffectation(Long id);
-    List<Affectation> affectationList();
+    AffectationDTO findAffectation(Long id);
+    List<AffectationDTO> affectationList();
 }

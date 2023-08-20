@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Livraison;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 
 import java.util.List;
 
 public interface LivraisonService {
-    Livraison addLivraison(Livraison livraison);
-    Livraison updateLivraison(Livraison livraison);
+    LivraisonDTO addLivraison(LivraisonDTO livraisonDTO);
+    LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO);
     void deleteLivraison(Long id);
-    Livraison findLivraison(Long id);
-    List<Livraison> livraisonList();
+    LivraisonDTO findLivraison(Long id);
+    List<LivraisonDTO> livraisonList();
 }

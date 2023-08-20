@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Commande;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 
 import java.util.List;
 
 public interface CommandeService {
-    Commande addCommande(Commande commande);
-    Commande updateCommande(Commande commande);
+    CommandeDTO addCommande(CommandeDTO commandeDTO);
+    CommandeDTO updateCommande(CommandeDTO commandeDTO);
     void deleteCommande(Long id);
-    Commande findCommande(Long id);
-    List<Commande> commandeList();
+    CommandeDTO findCommande(Long id);
+    List<CommandeDTO> commandeList();
 }

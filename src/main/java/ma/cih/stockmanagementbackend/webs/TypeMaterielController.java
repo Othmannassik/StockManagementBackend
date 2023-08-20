@@ -1,7 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
-import ma.cih.stockmanagementbackend.entities.TypeMateriel;
+import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,24 +13,24 @@ import java.util.List;
 public class TypeMaterielController {
     private TypeMaterielService typeMaterielService;
     @PostMapping()
-    public TypeMateriel saveTypeMateriel(@RequestBody TypeMateriel typeMateriel){
-        return typeMaterielService.addTypeMateriel(typeMateriel);
+    public TypeMaterielDTO saveTypeMateriel(@RequestBody TypeMaterielDTO typeMaterielDTO){
+        return typeMaterielService.addTypeMateriel(typeMaterielDTO);
     }
     @PutMapping("/{typeMaterielId}")
-    public TypeMateriel updateTypeMateriel(@RequestBody TypeMateriel typeMateriel, @PathVariable Long typeMaterielId){
-        typeMateriel.setIdTypeMat(typeMaterielId);
-        return typeMaterielService.updateTypeMateriel(typeMateriel);
+    public TypeMaterielDTO updateTypeMateriel(@RequestBody TypeMaterielDTO typeMaterielDTO, @PathVariable Long typeMaterielId){
+        typeMaterielDTO.setIdTypeMat(typeMaterielId);
+        return typeMaterielService.updateTypeMateriel(typeMaterielDTO);
     }
     @DeleteMapping("/{typeMaterielId}")
     public void deleteTypeMateriel(@PathVariable Long typeMaterielId){
         typeMaterielService.deleteTypeMateriel(typeMaterielId);
     }
     @GetMapping()
-    public List<TypeMateriel> typeMaterielList(){
+    public List<TypeMaterielDTO> typeMaterielList(){
         return typeMaterielService.typeMaterielList();
     }
     @GetMapping("/{typeMaterielId}")
-    public TypeMateriel getTypeMateriel(@PathVariable Long typeMaterielId){
+    public TypeMaterielDTO getTypeMateriel(@PathVariable Long typeMaterielId){
         return typeMaterielService.findTypeMateriel(typeMaterielId);
     }
 }

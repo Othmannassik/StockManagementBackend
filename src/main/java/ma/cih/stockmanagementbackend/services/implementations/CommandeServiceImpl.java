@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.entities.Commande;
+import ma.cih.stockmanagementbackend.mappers.CommandeMapper;
 import ma.cih.stockmanagementbackend.repositories.CommandeRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class CommandeServiceImpl implements CommandeService {
     private CommandeRepository commandeRepository;
+    private CommandeMapper commandeMapper;
     @Override
-    public Commande addCommande(Commande commande) {
-        return commandeRepository.save(commande);
+    public CommandeDTO addCommande(CommandeDTO commandeDTO) {
+        Commande commande = commandeMapper.toCommande(commandeDTO);
+        commandeRepository.save(commande);
+        return commandeDTO;
     }
 
     @Override
-    public Commande updateCommande(Commande commande) {
-        return commandeRepository.save(commande);
+    public CommandeDTO updateCommande(CommandeDTO commandeDTO) {
+        Commande commande = commandeMapper.toCommande(commandeDTO);
+        commandeRepository.save(commande);
+        return commandeDTO;
     }
 
     @Override
@@ -29,12 +36,15 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande findCommande(Long id) {
-        return commandeRepository.findById(id).orElse(null);
+    public CommandeDTO findCommande(Long id) {
+        Commande commande = commandeRepository.findById(id).orElse(null);
+        return commandeMapper.toCommandeDTO(commande);
     }
 
     @Override
-    public List<Commande> commandeList() {
-        return commandeRepository.findAll();
+    public List<CommandeDTO> commandeList() {
+        return commandeRepository.findAll().stream()
+                .map(cmd -> commandeMapper.toCommandeDTO(cmd))
+                .toList();
     }
 }

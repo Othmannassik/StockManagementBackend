@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.mappers.PrestataireMapper;
 import ma.cih.stockmanagementbackend.repositories.PrestataireRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class PrestataireServiceImpl implements PrestataireService {
     private PrestataireRepository prestataireRepository;
+    private PrestataireMapper prestataireMapper;
     @Override
-    public Prestataire addPrestataire(Prestataire prestataire) {
-        return prestataireRepository.save(prestataire);
+    public PrestataireDTO addPrestataire(PrestataireDTO prestataireDTO) {
+        Prestataire prestataire = prestataireMapper.toPrestataire(prestataireDTO);
+        prestataireRepository.save(prestataire);
+        return prestataireDTO;
     }
 
     @Override
-    public Prestataire updatePrestataire(Prestataire prestataire) {
-        return prestataireRepository.save(prestataire);
+    public PrestataireDTO updatePrestataire(PrestataireDTO prestataireDTO) {
+        Prestataire prestataire = prestataireMapper.toPrestataire(prestataireDTO);
+        prestataireRepository.save(prestataire);
+        return prestataireDTO;
     }
 
     @Override
@@ -29,12 +36,15 @@ public class PrestataireServiceImpl implements PrestataireService {
     }
 
     @Override
-    public Prestataire findPrestataire(Long id) {
-        return prestataireRepository.findById(id).orElse(null);
+    public PrestataireDTO findPrestataire(Long id) {
+        Prestataire prestataire = prestataireRepository.findById(id).orElse(null);
+        return prestataireMapper.toPrestataireDTO(prestataire);
     }
 
     @Override
-    public List<Prestataire> prestataireList() {
-        return prestataireRepository.findAll();
+    public List<PrestataireDTO> prestataireList() {
+        return prestataireRepository.findAll().stream()
+                .map(pres -> prestataireMapper.toPrestataireDTO(pres))
+                .toList();
     }
 }

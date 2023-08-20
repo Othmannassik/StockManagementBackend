@@ -1,7 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
-import ma.cih.stockmanagementbackend.entities.Proprietaire;
+import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
 import ma.cih.stockmanagementbackend.services.interfaces.ProprietaireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,24 +13,24 @@ import java.util.List;
 public class ProprietaireController {
     private ProprietaireService proprietaireService;
     @PostMapping()
-    public Proprietaire saveProprietaire(@RequestBody Proprietaire proprietaire){
-        return proprietaireService.addProprietaire(proprietaire);
+    public ProprietaireDTO saveProprietaire(@RequestBody ProprietaireDTO proprietaireDTO){
+        return proprietaireService.addProprietaire(proprietaireDTO);
     }
     @PutMapping("/{proprietaireId}")
-    public Proprietaire updateProprietaire(@RequestBody Proprietaire proprietaire, @PathVariable Long proprietaireId){
-        proprietaire.setIdProp(proprietaireId);
-        return proprietaireService.updateProprietaire(proprietaire);
+    public ProprietaireDTO updateProprietaire(@RequestBody ProprietaireDTO proprietaireDTO, @PathVariable Long proprietaireId){
+        proprietaireDTO.setIdProp(proprietaireId);
+        return proprietaireService.updateProprietaire(proprietaireDTO);
     }
     @DeleteMapping("/{proprietaireId}")
     public void deleteProprietaire(@PathVariable Long proprietaireId){
         proprietaireService.deleteProprietaire(proprietaireId);
     }
     @GetMapping()
-    public List<Proprietaire> proprietaireList(){
+    public List<ProprietaireDTO> proprietaireList(){
         return proprietaireService.proprietaireList();
     }
     @GetMapping("/{proprietaireId}")
-    public Proprietaire getProprietaire(@PathVariable Long proprietaireId){
+    public ProprietaireDTO getProprietaire(@PathVariable Long proprietaireId){
         return proprietaireService.findProprietaire(proprietaireId);
     }
 }

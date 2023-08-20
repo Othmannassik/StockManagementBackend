@@ -1,8 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
-import ma.cih.stockmanagementbackend.entities.Materiel;
-import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,24 +13,24 @@ import java.util.List;
 public class MaterielController {
     private MaterielService materielService;
     @PostMapping()
-    public Materiel saveMateriel(@RequestBody Materiel materiel){
-        return materielService.addMateriel(materiel);
+    public MaterielDTO saveMateriel(@RequestBody MaterielDTO materielDTO){
+        return materielService.addMateriel(materielDTO);
     }
     @PutMapping("/{materielId}")
-    public Materiel updateMateriel(@RequestBody Materiel materiel, @PathVariable Long materielId){
-        materiel.setIdMat(materielId);
-        return materielService.updateMateriel(materiel);
+    public MaterielDTO updateMateriel(@RequestBody MaterielDTO materielDTO, @PathVariable Long materielId){
+        materielDTO.setIdMat(materielId);
+        return materielService.updateMateriel(materielDTO);
     }
     @DeleteMapping("/{materielId}")
     public void deleteMateriel(@PathVariable Long materielId){
         materielService.deleteMateriel(materielId);
     }
     @GetMapping()
-    public List<Materiel> materielList(){
+    public List<MaterielDTO> materielList(){
         return materielService.materielList();
     }
     @GetMapping("/{materielId}")
-    public Materiel getMateriel(@PathVariable Long materielId){
+    public MaterielDTO getMateriel(@PathVariable Long materielId){
         return materielService.findMateriel(materielId);
     }
 }

@@ -1,6 +1,6 @@
 package ma.cih.stockmanagementbackend;
 
-import ma.cih.stockmanagementbackend.entities.*;
+import ma.cih.stockmanagementbackend.dtos.*;
 import ma.cih.stockmanagementbackend.enums.StatusCmd;
 import ma.cih.stockmanagementbackend.services.interfaces.*;
 import org.springframework.boot.CommandLineRunner;
@@ -29,65 +29,82 @@ public class StockManagementBackendApplication {
         return args -> {
             Stream.of("Scanner", "Laptop", "Lecteur")
                     .forEach(type -> {
-                        TypeMateriel typeMateriel = TypeMateriel.builder().name(type).build();
-                        typeMaterielService.addTypeMateriel(typeMateriel);
+                        TypeMaterielDTO typeMaterielDTO = new TypeMaterielDTO();
+                        typeMaterielDTO.setName(type);
+                        typeMaterielService.addTypeMateriel(typeMaterielDTO);
                     });
 
             Stream.of("Ahmed", "Hassan", "Yassmine", "Omar")
                     .forEach(name -> {
-                        Proprietaire proprietaire = Proprietaire.builder()
-                                .firstName(name)
-                                .lastName(name+" knia")
-                                .email(name+"@gmail.com")
-                                .telephone("839839030").build();
-                        proprietaireService.addProprietaire(proprietaire);
+                        ProprietaireDTO proprietaireDTO = new ProprietaireDTO();
+                        proprietaireDTO.setFirstName(name);
+                        proprietaireDTO.setLastName(name+" knia");
+                        proprietaireDTO.setEmail(name+"@gmail.com");
+                        proprietaireDTO.setTelephone("03837376");
+                        proprietaireService.addProprietaire(proprietaireDTO);
                     });
 
             Stream.of("Ali", "Issam", "Mohamed")
                     .forEach(name -> {
-                        Prestataire prestataire = Prestataire.builder()
-                                .firstName(name)
-                                .lastName(name+" knia")
-                                .email(name+"@gmail.com")
-                                .telephone("09338749").build();
-                        prestataireService.addPrestataire(prestataire);
+                        PrestataireDTO prestataireDTO = new PrestataireDTO();
+                        prestataireDTO.setFirstName(name);
+                        prestataireDTO.setLastName(name+" knia");
+                        prestataireDTO.setEmail(name+"@gmail.com");
+                        prestataireDTO.setTelephone("03837376");
+                        prestataireService.addPrestataire(prestataireDTO);
                     });
 
             Stream.of("Agence A", "Siege 287", "Annexe 2")
                     .forEach(name -> {
-                        Etablissement etablissement = Etablissement.builder()
-                                .name(name)
-                                .city("Mohammedia").build();
-                        etablissementService.addEtablissement(etablissement);
+                        EtablissementDTO etablissementDTO = new EtablissementDTO();
+                        etablissementDTO.setName(name);
+                        etablissementDTO.setCity("Casa");
+                        etablissementService.addEtablissement(etablissementDTO);
                     });
 
             Stream.of("Dell Latitude", "Oppo Scan")
                     .forEach(mat -> {
-                        Materiel materiel = Materiel.builder()
-                                .model(mat)
-                                .numSerie(828730L)
-                                .quantity(29)
-                                .inventaireCih("KDL992").build();
-                        materielService.addMateriel(materiel);
+                        MaterielDTO materielDTO = new MaterielDTO();
+                        materielDTO.setModel(mat);
+                        materielDTO.setQuantity(29);
+                        materielDTO.setNumSerie(828730L);
+                        materielDTO.setInventaireCih("KDL992");
+                        materielDTO.setTypeMaterielDTO(typeMaterielService.findTypeMateriel(2L));
+                        materielDTO.setEtablissementDTO(etablissementService.findEtablissement(1L));
+                        materielService.addMateriel(materielDTO);
                     });
 
             Stream.of("BC383", "BC93", "BC38")
                     .forEach(bc -> {
-                        Commande commande = Commande.builder()
-                                .bonCmd(bc)
-                                .date(LocalDate.now())
-                                .quantity(3)
-                                .status(StatusCmd.CREATED).build();
-                        commandeService.addCommande(commande);
+                        CommandeDTO commandeDTO = new CommandeDTO();
+                        commandeDTO.setDate(LocalDate.now());
+                        commandeDTO.setBonCmd(bc);
+                        commandeDTO.setQuantity(4);
+                        commandeDTO.setMaterielDTO(materielService.findMateriel(1L));
+                        commandeDTO.setPrestataireDTO(prestataireService.findPrestataire(2L));
+                        commandeDTO.setStatus(StatusCmd.CREATED);
+                        commandeService.addCommande(commandeDTO);
                     });
 
             Stream.of("BL04", "BL293", "BL8")
                     .forEach(bl -> {
-                        Livraison livraison = Livraison.builder()
-                                .bonLiv(bl)
-                                .date(LocalDate.now())
-                                .quantity(2).build();
-                        livraisonService.addLivraison(livraison);
+                        LivraisonDTO livraisonDTO = new LivraisonDTO();
+                        livraisonDTO.setDate(LocalDate.now());
+                        livraisonDTO.setQuantity(3);
+                        livraisonDTO.setBonLiv(bl);
+                        livraisonDTO.setCommandeDTO(commandeService.findCommande(2L));
+                        livraisonService.addLivraison(livraisonDTO);
+                    });
+
+
+            Stream.of("motif 1", "motif 2", "motif 3")
+                    .forEach(motif -> {
+                        AffectationDTO affectationDTO = new AffectationDTO();
+                        affectationDTO.setDate(LocalDate.now());
+                        affectationDTO.setMotif(motif);
+                        affectationDTO.setProprietaireDTO(proprietaireService.findProprietaire(2L));
+                        affectationDTO.setMaterielDTO(materielService.findMateriel(1L));
+                        affectationService.addAffectation(affectationDTO);
                     });
         };
     }

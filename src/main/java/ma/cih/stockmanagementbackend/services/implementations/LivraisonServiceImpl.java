@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.entities.Livraison;
+import ma.cih.stockmanagementbackend.mappers.LivraisonMapper;
 import ma.cih.stockmanagementbackend.repositories.LivraisonRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class LivraisonServiceImpl implements LivraisonService {
     private LivraisonRepository livraisonRepository;
+    private LivraisonMapper livraisonMapper;
     @Override
-    public Livraison addLivraison(Livraison livraison) {
-        return livraisonRepository.save(livraison);
+    public LivraisonDTO addLivraison(LivraisonDTO livraisonDTO) {
+        Livraison livraison = livraisonMapper.toLivraison(livraisonDTO);
+        livraisonRepository.save(livraison);
+        return livraisonDTO;
     }
 
     @Override
-    public Livraison updateLivraison(Livraison livraison) {
-        return livraisonRepository.save(livraison);
+    public LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO) {
+        Livraison livraison = livraisonMapper.toLivraison(livraisonDTO);
+        livraisonRepository.save(livraison);
+        return livraisonDTO;
     }
 
     @Override
@@ -29,12 +36,15 @@ public class LivraisonServiceImpl implements LivraisonService {
     }
 
     @Override
-    public Livraison findLivraison(Long id) {
-        return livraisonRepository.findById(id).orElse(null);
+    public LivraisonDTO findLivraison(Long id) {
+        Livraison livraison = livraisonRepository.findById(id).orElse(null);
+        return livraisonMapper.toLivraisonDTO(livraison);
     }
 
     @Override
-    public List<Livraison> livraisonList() {
-        return livraisonRepository.findAll();
+    public List<LivraisonDTO> livraisonList() {
+        return livraisonRepository.findAll().stream()
+                .map(liv -> livraisonMapper.toLivraisonDTO(liv))
+                .toList();
     }
 }

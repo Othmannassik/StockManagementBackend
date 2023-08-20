@@ -1,7 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
-import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,24 +13,24 @@ import java.util.List;
 public class PrestataireController {
     private PrestataireService prestataireService;
     @PostMapping()
-    public Prestataire savePrestataire(@RequestBody Prestataire prestataire){
-        return prestataireService.addPrestataire(prestataire);
+    public PrestataireDTO savePrestataire(@RequestBody PrestataireDTO prestataireDTO){
+        return prestataireService.addPrestataire(prestataireDTO);
     }
     @PutMapping("/{prestataireId}")
-    public Prestataire updatePrestataire(@RequestBody Prestataire prestataire, @PathVariable Long prestataireId){
-        prestataire.setIdPres(prestataireId);
-        return prestataireService.updatePrestataire(prestataire);
+    public PrestataireDTO updatePrestataire(@RequestBody PrestataireDTO prestataireDTO, @PathVariable Long prestataireId){
+        prestataireDTO.setIdPres(prestataireId);
+        return prestataireService.updatePrestataire(prestataireDTO);
     }
     @DeleteMapping("/{prestataireId}")
     public void deletePrestataire(@PathVariable Long prestataireId){
         prestataireService.deletePrestataire(prestataireId);
     }
     @GetMapping()
-    public List<Prestataire> prestataireList(){
+    public List<PrestataireDTO> prestataireList(){
         return prestataireService.prestataireList();
     }
     @GetMapping("/{prestataireId}")
-    public Prestataire getPrestataire(@PathVariable Long prestataireId){
+    public PrestataireDTO getPrestataire(@PathVariable Long prestataireId){
         return prestataireService.findPrestataire(prestataireId);
     }
 }

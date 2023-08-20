@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.entities.Etablissement;
+import ma.cih.stockmanagementbackend.mappers.EtablissementMapper;
 import ma.cih.stockmanagementbackend.repositories.EtablissementRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class EtablissementServiceImpl implements EtablissementService {
     private EtablissementRepository etablissementRepository;
+    private EtablissementMapper etablissementMapper;
     @Override
-    public Etablissement addEtablissement(Etablissement etablissement) {
-        return etablissementRepository.save(etablissement);
+    public EtablissementDTO addEtablissement(EtablissementDTO etablissementDTO) {
+        Etablissement etablissement = etablissementMapper.toEtablissement(etablissementDTO);
+        etablissementRepository.save(etablissement);
+        return etablissementDTO;
     }
 
     @Override
-    public Etablissement updateEtablissement(Etablissement etablissement) {
-        return etablissementRepository.save(etablissement);
+    public EtablissementDTO updateEtablissement(EtablissementDTO etablissementDTO) {
+        Etablissement etablissement = etablissementMapper.toEtablissement(etablissementDTO);
+        etablissementRepository.save(etablissement);
+        return etablissementDTO;
     }
 
     @Override
@@ -29,12 +36,16 @@ public class EtablissementServiceImpl implements EtablissementService {
     }
 
     @Override
-    public Etablissement findEtablissement(Long id) {
-        return etablissementRepository.findById(id).orElse(null);
+    public EtablissementDTO findEtablissement(Long id) {
+        Etablissement etablissement = etablissementRepository.findById(id).orElse(null);
+        return etablissementMapper.toEtablissementDTO(etablissement);
     }
 
     @Override
-    public List<Etablissement> etablissementList() {
-        return etablissementRepository.findAll();
+    public List<EtablissementDTO> etablissementList() {
+        List<Etablissement> etablissementList = etablissementRepository.findAll();
+        return etablissementList.stream()
+                .map(etb -> etablissementMapper.toEtablissementDTO(etb))
+                .toList();
     }
 }

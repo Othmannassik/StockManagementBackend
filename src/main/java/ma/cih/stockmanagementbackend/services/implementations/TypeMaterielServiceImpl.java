@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
 import ma.cih.stockmanagementbackend.entities.TypeMateriel;
+import ma.cih.stockmanagementbackend.mappers.TypeMaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.TypeMaterielRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class TypeMaterielServiceImpl implements TypeMaterielService {
     private TypeMaterielRepository typeMaterielRepository;
+    private TypeMaterielMapper typeMaterielMapper;
     @Override
-    public TypeMateriel addTypeMateriel(TypeMateriel typeMateriel) {
-        return typeMaterielRepository.save(typeMateriel);
+    public TypeMaterielDTO addTypeMateriel(TypeMaterielDTO typeMaterielDTO) {
+        TypeMateriel typeMateriel = typeMaterielMapper.toTypeMateriel(typeMaterielDTO);
+        typeMaterielRepository.save(typeMateriel);
+        return typeMaterielDTO;
     }
 
     @Override
-    public TypeMateriel updateTypeMateriel(TypeMateriel typeMateriel) {
-        return typeMaterielRepository.save(typeMateriel);
+    public TypeMaterielDTO updateTypeMateriel(TypeMaterielDTO typeMaterielDTO) {
+        TypeMateriel typeMateriel = typeMaterielMapper.toTypeMateriel(typeMaterielDTO);
+        typeMaterielRepository.save(typeMateriel);
+        return typeMaterielDTO;
     }
 
     @Override
@@ -29,12 +36,16 @@ public class TypeMaterielServiceImpl implements TypeMaterielService {
     }
 
     @Override
-    public TypeMateriel findTypeMateriel(Long id) {
-        return typeMaterielRepository.findById(id).orElse(null);
+    public TypeMaterielDTO findTypeMateriel(Long id) {
+        TypeMateriel typeMateriel = typeMaterielRepository.findById(id).orElse(null);
+        return typeMaterielMapper.toTypeMaterielDTO(typeMateriel);
     }
 
     @Override
-    public List<TypeMateriel> typeMaterielList() {
-        return typeMaterielRepository.findAll();
+    public List<TypeMaterielDTO> typeMaterielList() {
+        List<TypeMateriel> typeMaterielList = typeMaterielRepository.findAll();
+        return typeMaterielList.stream()
+                .map(type -> typeMaterielMapper.toTypeMaterielDTO(type))
+                .toList();
     }
 }

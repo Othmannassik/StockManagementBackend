@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Prestataire;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 
 import java.util.List;
 
 public interface PrestataireService {
-    Prestataire addPrestataire(Prestataire prestataire);
-    Prestataire updatePrestataire(Prestataire prestataire);
+    PrestataireDTO addPrestataire(PrestataireDTO prestataireDTO);
+    PrestataireDTO updatePrestataire(PrestataireDTO prestataireDTO);
     void deletePrestataire(Long id);
-    Prestataire findPrestataire(Long id);
-    List<Prestataire> prestataireList();
+    PrestataireDTO findPrestataire(Long id);
+    List<PrestataireDTO> prestataireList();
 }

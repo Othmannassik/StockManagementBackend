@@ -1,14 +1,13 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
-import ma.cih.stockmanagementbackend.entities.Proprietaire;
-import org.springframework.stereotype.Service;
+import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
 
 import java.util.List;
 
 public interface ProprietaireService {
-    Proprietaire addProprietaire(Proprietaire proprietaire);
-    Proprietaire updateProprietaire(Proprietaire proprietaire);
+    ProprietaireDTO addProprietaire(ProprietaireDTO proprietaireDTO);
+    ProprietaireDTO updateProprietaire(ProprietaireDTO proprietaireDTO);
     void deleteProprietaire(Long id);
-    Proprietaire findProprietaire(Long id);
-    List<Proprietaire> proprietaireList();
+    ProprietaireDTO findProprietaire(Long id);
+    List<ProprietaireDTO> proprietaireList();
 }
