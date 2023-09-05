@@ -13,8 +13,7 @@ import java.util.List;
 public class Prestataire {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPres;
-    private String firstName;
-    private String lastName;
+    private String raisonSocial;
     private String email;
     private String telephone;
     @OneToMany(mappedBy = "prestataire")

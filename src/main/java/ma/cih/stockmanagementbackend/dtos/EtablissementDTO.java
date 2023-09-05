@@ -6,5 +6,6 @@ import lombok.Data;
 public class EtablissementDTO {
     private Long idEtb;
     private String name;
+    private String adresse;
     private String city;
 }

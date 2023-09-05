@@ -14,6 +14,7 @@ public class Etablissement {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEtb;
     private String name;
+    private String adresse;
     private String city;
     @OneToMany(mappedBy = "etablissement")
     private List<Materiel> materielList;

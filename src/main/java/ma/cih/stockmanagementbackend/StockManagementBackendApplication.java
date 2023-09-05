@@ -45,11 +45,10 @@ public class StockManagementBackendApplication {
                         proprietaireService.addProprietaire(proprietaireDTO);
                     });
 
-            Stream.of("Ali", "Issam", "Mohamed")
+            Stream.of("Electro Planet", "Fnac", "Societe x")
                     .forEach(name -> {
                         PrestataireDTO prestataireDTO = new PrestataireDTO();
-                        prestataireDTO.setFirstName(name);
-                        prestataireDTO.setLastName(name+" knia");
+                        prestataireDTO.setRaisonSocial(name);
                         prestataireDTO.setEmail(name+"@gmail.com");
                         prestataireDTO.setTelephone("03837376");
                         prestataireService.addPrestataire(prestataireDTO);
@@ -59,6 +58,7 @@ public class StockManagementBackendApplication {
                     .forEach(name -> {
                         EtablissementDTO etablissementDTO = new EtablissementDTO();
                         etablissementDTO.setName(name);
+                        etablissementDTO.setAdresse("This is an adresse");
                         etablissementDTO.setCity("Casa");
                         etablissementService.addEtablissement(etablissementDTO);
                     });
