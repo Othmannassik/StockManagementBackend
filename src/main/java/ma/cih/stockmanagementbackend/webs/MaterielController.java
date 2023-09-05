@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("materiels")
+@CrossOrigin
 public class MaterielController {
     private MaterielService materielService;
     @PostMapping()

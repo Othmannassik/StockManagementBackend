@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("commandes")
+@CrossOrigin
 public class CommandeController {
     private CommandeService commandeService;
     @PostMapping()

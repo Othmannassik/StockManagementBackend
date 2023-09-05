@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("proprietaires")
+@CrossOrigin
 public class ProprietaireController {
     private ProprietaireService proprietaireService;
     @PostMapping()

@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("typeMateriels")
+@CrossOrigin
 public class TypeMaterielController {
     private TypeMaterielService typeMaterielService;
     @PostMapping()

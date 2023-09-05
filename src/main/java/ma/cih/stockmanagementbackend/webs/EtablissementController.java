@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("etablissements")
+@CrossOrigin
 public class EtablissementController {
     private EtablissementService etablissementService;
     @PostMapping()
