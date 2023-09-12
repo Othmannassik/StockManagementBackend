@@ -3,14 +3,18 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
+import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
 import ma.cih.stockmanagementbackend.entities.Materiel;
 import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.EtablissementMapper;
 import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
+import ma.cih.stockmanagementbackend.mappers.TypeMaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.MaterielRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
+import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +27,8 @@ public class MaterielServiceImpl implements MaterielService {
     private MaterielMapper materielMapper;
     private EtablissementService etablissementService;
     private EtablissementMapper etablissementMapper;
+    private TypeMaterielService typeMaterielService;
+    private TypeMaterielMapper typeMaterielMapper;
     @Override
     public MaterielDTO addMateriel(MaterielDTO materielDTO) {
         Materiel materiel =materielMapper.toMateriel(materielDTO);
@@ -61,5 +67,10 @@ public class MaterielServiceImpl implements MaterielService {
     public int nbMatByEtablissement(Long id) throws EtablissementNotFoundException {
         EtablissementDTO etablissementDTO = etablissementService.findEtablissement(id);
         return materielRepository.countByEtablissement(etablissementMapper.toEtablissement(etablissementDTO));
+    }
+    @Override
+    public int nbMatByTypeMateriel(Long id) throws TypeMaterielNotFoundException {
+        TypeMaterielDTO typeMaterielDTO = typeMaterielService.findTypeMateriel(id);
+        return materielRepository.countByTypeMateriel(typeMaterielMapper.toTypeMateriel(typeMaterielDTO));
     }
 }

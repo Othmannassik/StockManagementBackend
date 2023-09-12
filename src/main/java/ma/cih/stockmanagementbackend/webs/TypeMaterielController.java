@@ -2,7 +2,9 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
+import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @CrossOrigin
 public class TypeMaterielController {
     private TypeMaterielService typeMaterielService;
+    private MaterielService materielService;
     @PostMapping()
     public TypeMaterielDTO saveTypeMateriel(@RequestBody TypeMaterielDTO typeMaterielDTO){
         return typeMaterielService.addTypeMateriel(typeMaterielDTO);
@@ -34,5 +37,9 @@ public class TypeMaterielController {
     @GetMapping("/{typeMaterielId}")
     public TypeMaterielDTO getTypeMateriel(@PathVariable Long typeMaterielId) throws TypeMaterielNotFoundException {
         return typeMaterielService.findTypeMateriel(typeMaterielId);
+    }
+    @GetMapping("/{typeMaterielId}/materiels")
+    public int nbMaterielByTypeMateriel(@PathVariable Long typeMaterielId) throws TypeMaterielNotFoundException {
+        return materielService.nbMatByTypeMateriel(typeMaterielId);
     }
 }
