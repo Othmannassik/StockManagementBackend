@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.webs;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
+import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
 import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @CrossOrigin
 public class PrestataireController {
     private PrestataireService prestataireService;
+    private CommandeService commandeService;
     @PostMapping()
     public PrestataireDTO savePrestataire(@RequestBody PrestataireDTO prestataireDTO){
         return prestataireService.addPrestataire(prestataireDTO);
@@ -34,5 +36,9 @@ public class PrestataireController {
     @GetMapping("/{prestataireId}")
     public PrestataireDTO getPrestataire(@PathVariable Long prestataireId) throws PrestataireNotFoundException {
         return prestataireService.findPrestataire(prestataireId);
+    }
+    @GetMapping("/{prestataireId}/commandes")
+    public int nbCmdByPrestataire(@PathVariable Long prestataireId) throws PrestataireNotFoundException {
+        return commandeService.nbCmdByPrestataire(prestataireId);
     }
 }

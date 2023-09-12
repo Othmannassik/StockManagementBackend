@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.webs;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.AffectationDTO;
 import ma.cih.stockmanagementbackend.exceptions.AffectationNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.ProprietaireNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.AffectationService;
 import org.springframework.web.bind.annotation.*;
 

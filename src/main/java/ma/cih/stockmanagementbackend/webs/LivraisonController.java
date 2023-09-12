@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
+import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,9 @@ import java.util.List;
 @CrossOrigin
 public class LivraisonController {
     private LivraisonService livraisonService;
-    @PostMapping()
-    public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO){
-        return livraisonService.addLivraison(livraisonDTO);
+    @PostMapping("/{commadeId}")
+    public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long commadeId) throws CommandeNotFoundException {
+        return livraisonService.addLivraison(livraisonDTO, commadeId);
     }
     @PutMapping("/{livraisonId}")
     public LivraisonDTO updateLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long livraisonId){

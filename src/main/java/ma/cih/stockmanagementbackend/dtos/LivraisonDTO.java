@@ -10,5 +10,4 @@ public class LivraisonDTO {
     private String bonLiv;
     private LocalDate date;
     private int quantity;
-    private CommandeDTO commandeDTO;
 }

@@ -1,7 +1,9 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 
 import java.util.List;
 
@@ -11,4 +13,5 @@ public interface MaterielService {
     void deleteMateriel(Long id);
     MaterielDTO findMateriel(Long id) throws MaterielNotFoundException;
     List<MaterielDTO> materielList();
+    int nbMatByEtablissement(Long id) throws EtablissementNotFoundException;
 }

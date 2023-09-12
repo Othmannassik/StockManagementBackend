@@ -15,13 +15,17 @@ import java.util.List;
 public class Commande {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCmd;
-    private String bonCmd;
+    private String numBonCmd;
     private LocalDate date;
     private int quantity;
     @Enumerated(EnumType.STRING)
     private StatusCmd status;
+    @OneToOne
+    private PdfFile bonCmd;
     @ManyToOne @JoinColumn(name="idMat")
     private Materiel materiel;
+    @ManyToOne @JoinColumn(name="idEtb")
+    private Etablissement etablissement;
     @ManyToOne @JoinColumn(name="idPres")
     private Prestataire prestataire;
     @OneToMany(mappedBy = "commande")

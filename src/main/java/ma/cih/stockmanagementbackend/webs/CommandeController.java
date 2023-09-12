@@ -2,8 +2,13 @@ package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
+import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
-import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
+import ma.cih.stockmanagementbackend.services.interfaces.*;
+import ma.cih.stockmanagementbackend.utils.CommandeRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

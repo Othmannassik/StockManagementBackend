@@ -68,8 +68,8 @@ public class StockManagementBackendApplication {
                         MaterielDTO materielDTO = new MaterielDTO();
                         materielDTO.setModel(mat);
                         materielDTO.setQuantity(29);
-                        materielDTO.setNumSerie(828730L);
-                        materielDTO.setInventaireCih("KDL992");
+                        materielDTO.setNumSerie(27292L);
+                        materielDTO.setInventaireCih(mat.toUpperCase()+"_#MAT2782");
                         try {
                             materielDTO.setTypeMaterielDTO(typeMaterielService.findTypeMateriel(2L));
                             materielDTO.setEtablissementDTO(etablissementService.findEtablissement(1L));
@@ -83,15 +83,17 @@ public class StockManagementBackendApplication {
                     .forEach(bc -> {
                         CommandeDTO commandeDTO = new CommandeDTO();
                         commandeDTO.setDate(LocalDate.now());
-                        commandeDTO.setBonCmd(bc);
+                        commandeDTO.setNumBonCmd(bc);
                         commandeDTO.setQuantity(4);
+                        commandeDTO.setStatus(StatusCmd.CREATED);
+                        
                         try {
-                            commandeDTO.setMaterielDTO(materielService.findMateriel(1L));
-                            commandeDTO.setPrestataireDTO(prestataireService.findPrestataire(2L));
-                        } catch (MaterielNotFoundException | PrestataireNotFoundException e) {
+                            commandeDTO.setPrestataire(prestataireService.findPrestataire(2L));
+                            commandeDTO.setMateriel(materielService.findMateriel(2L));
+                        } catch (PrestataireNotFoundException | MaterielNotFoundException e) {
                             e.printStackTrace();
                         }
-                        commandeDTO.setStatus(StatusCmd.CREATED);
+
                         commandeService.addCommande(commandeDTO);
                     });
 
@@ -102,11 +104,10 @@ public class StockManagementBackendApplication {
                         livraisonDTO.setQuantity(3);
                         livraisonDTO.setBonLiv(bl);
                         try {
-                            livraisonDTO.setCommandeDTO(commandeService.findCommande(2L));
+                            livraisonService.addLivraison(livraisonDTO, 2L);
                         } catch (CommandeNotFoundException e) {
                             e.printStackTrace();
                         }
-                        livraisonService.addLivraison(livraisonDTO);
                     });
 
 

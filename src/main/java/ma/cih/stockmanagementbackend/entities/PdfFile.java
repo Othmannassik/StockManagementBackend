@@ -5,17 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class Etablissement {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEtb;
+public class PdfFile {
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     private String name;
-    private String adresse;
-    private String city;
-    @OneToMany(mappedBy = "etablissement")
-    private List<Commande> commandeList;
+    @Lob
+    private byte[] data;
 }

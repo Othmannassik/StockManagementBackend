@@ -9,18 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class LivraisonMapper {
-    private CommandeMapper commandeMapper;
     public Livraison toLivraison(LivraisonDTO livraisonDTO){
         Livraison livraison = new Livraison();
         BeanUtils.copyProperties(livraisonDTO,livraison);
-        livraison.setCommande(commandeMapper.toCommande(livraisonDTO.getCommandeDTO()));
         return livraison;
     }
 
     public LivraisonDTO toLivraisonDTO(Livraison livraison){
         LivraisonDTO livraisonDTO = new LivraisonDTO();
         BeanUtils.copyProperties(livraison,livraisonDTO);
-        livraisonDTO.setCommandeDTO(commandeMapper.toCommandeDTO(livraison.getCommande()));
         return livraisonDTO;
     }
 }

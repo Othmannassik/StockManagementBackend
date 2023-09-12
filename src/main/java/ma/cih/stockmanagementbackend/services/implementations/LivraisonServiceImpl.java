@@ -1,11 +1,15 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.entities.Livraison;
+import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
+import ma.cih.stockmanagementbackend.mappers.CommandeMapper;
 import ma.cih.stockmanagementbackend.mappers.LivraisonMapper;
 import ma.cih.stockmanagementbackend.repositories.LivraisonRepository;
+import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +20,14 @@ import java.util.List;
 @AllArgsConstructor
 public class LivraisonServiceImpl implements LivraisonService {
     private LivraisonRepository livraisonRepository;
+    private CommandeService commandeService;
+    private CommandeMapper commandeMapper;
     private LivraisonMapper livraisonMapper;
     @Override
-    public LivraisonDTO addLivraison(LivraisonDTO livraisonDTO) {
+    public LivraisonDTO addLivraison(LivraisonDTO livraisonDTO, Long commandeId) throws CommandeNotFoundException {
         Livraison livraison = livraisonMapper.toLivraison(livraisonDTO);
+        CommandeDTO commandeDTO = commandeService.findCommande(commandeId);
+        livraison.setCommande(commandeMapper.toCommande(commandeDTO));
         livraisonRepository.save(livraison);
         return livraisonDTO;
     }

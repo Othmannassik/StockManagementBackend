@@ -1,11 +1,15 @@
 package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
 import ma.cih.stockmanagementbackend.entities.Materiel;
+import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
+import ma.cih.stockmanagementbackend.mappers.EtablissementMapper;
 import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.MaterielRepository;
+import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,8 @@ import java.util.List;
 public class MaterielServiceImpl implements MaterielService {
     private MaterielRepository materielRepository;
     private MaterielMapper materielMapper;
+    private EtablissementService etablissementService;
+    private EtablissementMapper etablissementMapper;
     @Override
     public MaterielDTO addMateriel(MaterielDTO materielDTO) {
         Materiel materiel =materielMapper.toMateriel(materielDTO);
@@ -49,5 +55,11 @@ public class MaterielServiceImpl implements MaterielService {
         return materielList.stream()
                 .map(mat -> materielMapper.toMaterielDTO(mat))
                 .toList();
+    }
+
+    @Override
+    public int nbMatByEtablissement(Long id) throws EtablissementNotFoundException {
+        EtablissementDTO etablissementDTO = etablissementService.findEtablissement(id);
+        return materielRepository.countByEtablissement(etablissementMapper.toEtablissement(etablissementDTO));
     }
 }

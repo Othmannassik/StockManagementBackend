@@ -2,6 +2,8 @@ package ma.cih.stockmanagementbackend.dtos;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class MaterielDTO {
     private Long idMat;
