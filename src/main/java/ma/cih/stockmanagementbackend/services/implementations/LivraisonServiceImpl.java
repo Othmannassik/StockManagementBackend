@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
+import ma.cih.stockmanagementbackend.entities.Commande;
 import ma.cih.stockmanagementbackend.entities.Livraison;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -56,5 +59,11 @@ public class LivraisonServiceImpl implements LivraisonService {
         return livraisonRepository.findAll().stream()
                 .map(liv -> livraisonMapper.toLivraisonDTO(liv))
                 .toList();
+    }
+    @Override
+    public String cmdByLivraison(Long id) throws LivraisonNotFoundException {
+        Livraison livraison = livraisonRepository.findById(id)
+                .orElseThrow(() -> new LivraisonNotFoundException(String.format("Livraison with id = %s Not Found", id)));
+        return livraison.getCommande().getNumBonCmd();
     }
 }

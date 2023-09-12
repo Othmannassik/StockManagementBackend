@@ -1,6 +1,7 @@
 package ma.cih.stockmanagementbackend.webs;
 
 import lombok.AllArgsConstructor;
+import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
@@ -35,5 +36,9 @@ public class LivraisonController {
     @GetMapping("/{livraisonId}")
     public LivraisonDTO getLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
         return livraisonService.findLivraison(livraisonId);
+    }
+    @GetMapping("/{livraisonId}/commande")
+    public String cmdByLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
+        return livraisonService.cmdByLivraison(livraisonId);
     }
 }

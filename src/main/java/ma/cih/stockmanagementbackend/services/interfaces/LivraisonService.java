@@ -1,5 +1,6 @@
 package ma.cih.stockmanagementbackend.services.interfaces;
 
+import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
@@ -12,4 +13,5 @@ public interface LivraisonService {
     void deleteLivraison(Long id);
     LivraisonDTO findLivraison(Long id) throws LivraisonNotFoundException;
     List<LivraisonDTO> livraisonList();
+    String cmdByLivraison(Long id) throws LivraisonNotFoundException;
 }
