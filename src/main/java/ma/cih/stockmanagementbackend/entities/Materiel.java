@@ -14,7 +14,7 @@ public class Materiel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMat;
     private String model;
-    private int quantity;
+    //private int quantity;
     private Long numSerie;
     private String inventaireCih;
     @ManyToOne @JoinColumn(name="idTypeMat")

@@ -16,9 +16,9 @@ import java.util.List;
 @CrossOrigin
 public class LivraisonController {
     private LivraisonService livraisonService;
-    @PostMapping("/{commadeId}")
-    public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long commadeId) throws CommandeNotFoundException {
-        return livraisonService.addLivraison(livraisonDTO, commadeId);
+    @PostMapping("/{commandeId}")
+    public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long commandeId) throws CommandeNotFoundException {
+        return livraisonService.addLivraison(livraisonDTO, commandeId);
     }
     @PutMapping("/{livraisonId}")
     public LivraisonDTO updateLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long livraisonId){

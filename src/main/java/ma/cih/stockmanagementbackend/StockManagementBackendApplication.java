@@ -67,7 +67,7 @@ public class StockManagementBackendApplication {
                     .forEach(mat -> {
                         MaterielDTO materielDTO = new MaterielDTO();
                         materielDTO.setModel(mat);
-                        materielDTO.setQuantity(29);
+                        //materielDTO.setQuantity(29);
                         materielDTO.setNumSerie(27292L);
                         materielDTO.setInventaireCih(mat.toUpperCase()+"_#MAT2782");
                         try {

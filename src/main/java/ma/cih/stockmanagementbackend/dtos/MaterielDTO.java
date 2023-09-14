@@ -8,7 +8,7 @@ import java.util.List;
 public class MaterielDTO {
     private Long idMat;
     private String model;
-    private int quantity;
+    //private int quantity;
     private Long numSerie;
     private String inventaireCih;
     private TypeMaterielDTO typeMaterielDTO;
