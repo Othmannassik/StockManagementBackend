@@ -36,8 +36,9 @@ public class LivraisonServiceImpl implements LivraisonService {
     }
 
     @Override
-    public LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO) {
+    public LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO, Long commandeId) throws CommandeNotFoundException {
         Livraison livraison = livraisonMapper.toLivraison(livraisonDTO);
+        livraison.setCommande(commandeMapper.toCommande(commandeService.findCommande(commandeId)));
         livraisonRepository.save(livraison);
         return livraisonDTO;
     }
@@ -61,9 +62,9 @@ public class LivraisonServiceImpl implements LivraisonService {
                 .toList();
     }
     @Override
-    public String cmdByLivraison(Long id) throws LivraisonNotFoundException {
+    public CommandeDTO cmdByLivraison(Long id) throws LivraisonNotFoundException {
         Livraison livraison = livraisonRepository.findById(id)
                 .orElseThrow(() -> new LivraisonNotFoundException(String.format("Livraison with id = %s Not Found", id)));
-        return livraison.getCommande().getNumBonCmd();
+        return commandeMapper.toCommandeDTO(livraison.getCommande());
     }
 }

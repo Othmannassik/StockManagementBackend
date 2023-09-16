@@ -14,15 +14,11 @@ public class Materiel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMat;
     private String model;
-    //private int quantity;
-    private Long numSerie;
-    private String inventaireCih;
+    private int quantity;
     @ManyToOne @JoinColumn(name="idTypeMat")
     private TypeMateriel typeMateriel;
-    @ManyToOne @JoinColumn(name="idEtb")
-    private Etablissement etablissement;
-    @OneToMany(mappedBy = "materiel")
-    private List<Affectation> propList;
     @OneToMany(mappedBy = "materiel")
     private List<Commande> commandeList;
+    @OneToMany(mappedBy = "materiel")
+    private List<MaterielDetail> materielDetailList;
 }

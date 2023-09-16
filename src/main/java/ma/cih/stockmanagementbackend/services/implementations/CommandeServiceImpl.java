@@ -2,18 +2,18 @@ package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
+import ma.cih.stockmanagementbackend.dtos.MaterielDetailDTO;
 import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.entities.Commande;
 import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.enums.StatusCmd;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.CommandeMapper;
 import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
 import ma.cih.stockmanagementbackend.mappers.PrestataireMapper;
 import ma.cih.stockmanagementbackend.repositories.CommandeRepository;
-import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
-import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
-import ma.cih.stockmanagementbackend.services.interfaces.PrestataireService;
+import ma.cih.stockmanagementbackend.services.interfaces.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +24,7 @@ import java.util.List;
 public class CommandeServiceImpl implements CommandeService {
     private CommandeRepository commandeRepository;
     private CommandeMapper commandeMapper;
+    private MaterielDetailService materielDetailService;
     private MaterielService materielService;
     private MaterielMapper materielMapper;
     private PrestataireService prestataireService;
@@ -31,7 +32,17 @@ public class CommandeServiceImpl implements CommandeService {
     @Override
     public CommandeDTO addCommande(CommandeDTO commandeDTO){
         Commande commande = commandeMapper.toCommande(commandeDTO);
-        commandeRepository.save(commande);
+        commande.setStatus(StatusCmd.CREATED);
+        Commande savedCmd = commandeRepository.save(commande);
+
+        savedCmd.getMateriel().setQuantity(savedCmd.getMateriel().getQuantity() + commandeDTO.getQuantity());
+        materielService.updateMateriel(materielMapper.toMaterielDTO(savedCmd.getMateriel()));
+
+        for (int i = 0; i < commandeDTO.getQuantity(); i++) {
+            MaterielDetailDTO materielDetailDTO = new MaterielDetailDTO();
+            materielDetailDTO.setMaterielDTO(commandeDTO.getMateriel());
+            materielDetailService.addMaterielDetail(materielDetailDTO);
+        }
         return commandeDTO;
     }
 

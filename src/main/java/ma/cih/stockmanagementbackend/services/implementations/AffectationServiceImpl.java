@@ -2,15 +2,19 @@ package ma.cih.stockmanagementbackend.services.implementations;
 
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.AffectationDTO;
+import ma.cih.stockmanagementbackend.dtos.MaterielDetailDTO;
 import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
 import ma.cih.stockmanagementbackend.entities.Affectation;
 import ma.cih.stockmanagementbackend.entities.Proprietaire;
 import ma.cih.stockmanagementbackend.exceptions.AffectationNotFoundException;
+import ma.cih.stockmanagementbackend.exceptions.MaterielDetailNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.ProprietaireNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.AffectationMapper;
+import ma.cih.stockmanagementbackend.mappers.MaterielDetailMapper;
 import ma.cih.stockmanagementbackend.mappers.ProprietaireMapper;
 import ma.cih.stockmanagementbackend.repositories.AffectationRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.AffectationService;
+import ma.cih.stockmanagementbackend.services.interfaces.MaterielDetailService;
 import ma.cih.stockmanagementbackend.services.interfaces.ProprietaireService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +28,14 @@ public class AffectationServiceImpl implements AffectationService {
     private AffectationMapper affectationMapper;
     private ProprietaireService proprietaireService;
     private ProprietaireMapper proprietaireMapper;
+    private MaterielDetailService materielDetailService;
+    private MaterielDetailMapper materielDetailMapper;
     @Override
     public AffectationDTO addAffectation(AffectationDTO affectationDTO) {
         Affectation affectation = affectationMapper.toAffectation(affectationDTO);
         affectationRepository.save(affectation);
+        affectationDTO.getMaterielDetailDTO().setUsageCount(affectationDTO.getMaterielDetailDTO().getUsageCount() + 1);
+        materielDetailService.updateMaterielDetail(affectationDTO.getMaterielDetailDTO());
         return affectationDTO;
     }
 
@@ -39,7 +47,10 @@ public class AffectationServiceImpl implements AffectationService {
     }
 
     @Override
-    public void deleteAffectation(Long id) {
+    public void deleteAffectation(Long id) throws AffectationNotFoundException {
+        AffectationDTO affectationDTO = findAffectation(id);
+        affectationDTO.getMaterielDetailDTO().setUsageCount(affectationDTO.getMaterielDetailDTO().getUsageCount() - 1);
+        materielDetailService.updateMaterielDetail(affectationDTO.getMaterielDetailDTO());
         affectationRepository.deleteById(id);
     }
 
@@ -64,4 +75,11 @@ public class AffectationServiceImpl implements AffectationService {
                 .map(affectation -> affectationMapper.toAffectationDTO(affectation))
                 .toList();
     }
+
+    @Override
+    public int countByMaterielDetail(Long id) throws MaterielDetailNotFoundException {
+        MaterielDetailDTO materielDetailDTO = materielDetailService.findMaterielDetail(id);
+        return affectationRepository.countByMaterielDetail(materielDetailMapper.toMaterielDetail(materielDetailDTO));
+    }
+
 }

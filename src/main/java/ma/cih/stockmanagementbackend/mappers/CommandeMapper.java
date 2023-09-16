@@ -24,6 +24,7 @@ public class CommandeMapper {
         Commande commande = new Commande();
         BeanUtils.copyProperties(commandeDTO,commande);
         commande.setMateriel(materielMapper.toMateriel(commandeDTO.getMateriel()));
+        commande.setEtablissement(etablissementMapper.toEtablissement(commandeDTO.getEtablissement()));
         if(commandeDTO.getPrestataire() != null){
             commande.setPrestataire(prestataireMapper.toPrestataire(commandeDTO.getPrestataire()));
         }
@@ -38,6 +39,7 @@ public class CommandeMapper {
         CommandeDTO commandeDTO = new CommandeDTO();
         BeanUtils.copyProperties(commande,commandeDTO);
         commandeDTO.setMateriel(materielMapper.toMaterielDTO(commande.getMateriel()));
+        commandeDTO.setEtablissement(etablissementMapper.toEtablissementDTO(commande.getEtablissement()));
         if (commande.getPrestataire() != null){
             commandeDTO.setPrestataire(prestataireMapper.toPrestataireDTO(commande.getPrestataire()));
         }

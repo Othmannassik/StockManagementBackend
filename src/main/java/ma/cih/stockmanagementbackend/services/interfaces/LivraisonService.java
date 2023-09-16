@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface LivraisonService {
     LivraisonDTO addLivraison(LivraisonDTO livraisonDTO, Long commadeId) throws CommandeNotFoundException;
-    LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO);
+    LivraisonDTO updateLivraison(LivraisonDTO livraisonDTO, Long commandeId) throws CommandeNotFoundException;
     void deleteLivraison(Long id);
     LivraisonDTO findLivraison(Long id) throws LivraisonNotFoundException;
     List<LivraisonDTO> livraisonList();
-    String cmdByLivraison(Long id) throws LivraisonNotFoundException;
+    CommandeDTO cmdByLivraison(Long id) throws LivraisonNotFoundException;
 }

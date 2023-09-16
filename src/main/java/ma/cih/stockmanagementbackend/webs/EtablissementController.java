@@ -37,8 +37,4 @@ public class EtablissementController {
     public EtablissementDTO getEtablissement(@PathVariable Long etablissementId) throws EtablissementNotFoundException {
         return etablissementService.findEtablissement(etablissementId);
     }
-    @GetMapping("/{etablissementId}/materiels")
-    public int nbMaterielByEtablissement(@PathVariable Long etablissementId) throws EtablissementNotFoundException {
-        return materielService.nbMatByEtablissement(etablissementId);
-    }
 }

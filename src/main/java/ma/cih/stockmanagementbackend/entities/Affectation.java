@@ -17,6 +17,6 @@ public class Affectation {
     private String motif;
     @ManyToOne @JoinColumn(name = "idProp")
     private Proprietaire proprietaire;
-    @ManyToOne @JoinColumn(name = "idMat")
-    private Materiel materiel;
+    @ManyToOne @JoinColumn(name = "idMatDet")
+    private MaterielDetail materielDetail;
 }

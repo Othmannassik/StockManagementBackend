@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.dtos.MaterielDTO;
+import ma.cih.stockmanagementbackend.dtos.MaterielDetailDTO;
 import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
 import ma.cih.stockmanagementbackend.entities.Materiel;
 import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
@@ -13,6 +14,7 @@ import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
 import ma.cih.stockmanagementbackend.mappers.TypeMaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.MaterielRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
+import ma.cih.stockmanagementbackend.services.interfaces.MaterielDetailService;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class MaterielServiceImpl implements MaterielService {
     private EtablissementMapper etablissementMapper;
     private TypeMaterielService typeMaterielService;
     private TypeMaterielMapper typeMaterielMapper;
+    private MaterielDetailService materielDetailService;
     @Override
     public MaterielDTO addMateriel(MaterielDTO materielDTO) {
         Materiel materiel =materielMapper.toMateriel(materielDTO);
@@ -63,11 +66,6 @@ public class MaterielServiceImpl implements MaterielService {
                 .toList();
     }
 
-    @Override
-    public int nbMatByEtablissement(Long id) throws EtablissementNotFoundException {
-        EtablissementDTO etablissementDTO = etablissementService.findEtablissement(id);
-        return materielRepository.countByEtablissement(etablissementMapper.toEtablissement(etablissementDTO));
-    }
     @Override
     public int nbMatByTypeMateriel(Long id) throws TypeMaterielNotFoundException {
         TypeMaterielDTO typeMaterielDTO = typeMaterielService.findTypeMateriel(id);

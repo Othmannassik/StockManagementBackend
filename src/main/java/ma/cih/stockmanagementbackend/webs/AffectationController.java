@@ -25,7 +25,7 @@ public class AffectationController {
         return affectationService.updateAffectation(affectationDTO);
     }
     @DeleteMapping("/{affectationId}")
-    public void deleteAffectation(@PathVariable Long affectationId){
+    public void deleteAffectation(@PathVariable Long affectationId) throws AffectationNotFoundException {
         affectationService.deleteAffectation(affectationId);
     }
     @GetMapping()

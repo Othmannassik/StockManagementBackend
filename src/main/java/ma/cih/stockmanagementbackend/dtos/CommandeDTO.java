@@ -1,6 +1,7 @@
 package ma.cih.stockmanagementbackend.dtos;
 
 import lombok.Data;
+import ma.cih.stockmanagementbackend.entities.Etablissement;
 import ma.cih.stockmanagementbackend.entities.PdfFile;
 import ma.cih.stockmanagementbackend.enums.StatusCmd;
 
@@ -17,6 +18,7 @@ public class CommandeDTO {
     private StatusCmd status;
     private PdfFile bonCmd;
     private MaterielDTO materiel;
+    private EtablissementDTO etablissement;
     private PrestataireDTO prestataire;
     private List<LivraisonDTO> livraisonList = new ArrayList<>();
 }

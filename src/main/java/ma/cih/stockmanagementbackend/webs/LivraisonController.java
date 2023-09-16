@@ -20,10 +20,10 @@ public class LivraisonController {
     public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long commandeId) throws CommandeNotFoundException {
         return livraisonService.addLivraison(livraisonDTO, commandeId);
     }
-    @PutMapping("/{livraisonId}")
-    public LivraisonDTO updateLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long livraisonId){
+    @PutMapping("/{livraisonId}/{commandeId}")
+    public LivraisonDTO updateLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long livraisonId, @PathVariable Long commandeId) throws CommandeNotFoundException {
         livraisonDTO.setIdLiv(livraisonId);
-        return livraisonService.updateLivraison(livraisonDTO);
+        return livraisonService.updateLivraison(livraisonDTO, commandeId);
     }
     @DeleteMapping("/{livraisonId}")
     public void deleteLivraison(@PathVariable Long livraisonId){
@@ -38,7 +38,7 @@ public class LivraisonController {
         return livraisonService.findLivraison(livraisonId);
     }
     @GetMapping("/{livraisonId}/commande")
-    public String cmdByLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
+    public CommandeDTO cmdByLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
         return livraisonService.cmdByLivraison(livraisonId);
     }
 }

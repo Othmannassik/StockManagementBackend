@@ -14,6 +14,6 @@ public interface MaterielService {
     void deleteMateriel(Long id);
     MaterielDTO findMateriel(Long id) throws MaterielNotFoundException;
     List<MaterielDTO> materielList();
-    int nbMatByEtablissement(Long id) throws EtablissementNotFoundException;
+    //int nbMatByEtablissement(Long id) throws EtablissementNotFoundException;
     int nbMatByTypeMateriel(Long id) throws TypeMaterielNotFoundException;
 }

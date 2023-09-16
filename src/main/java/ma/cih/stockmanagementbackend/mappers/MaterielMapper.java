@@ -14,16 +14,14 @@ public class MaterielMapper {
     public Materiel toMateriel(MaterielDTO materielDTO){
         Materiel materiel = new Materiel();
         BeanUtils.copyProperties(materielDTO,materiel);
-        materiel.setTypeMateriel(typeMaterielMapper.toTypeMateriel(materielDTO.getTypeMaterielDTO()));
-        materiel.setEtablissement(etablissementMapper.toEtablissement(materielDTO.getEtablissementDTO()));
+        materiel.setTypeMateriel(typeMaterielMapper.toTypeMateriel(materielDTO.getTypeMateriel()));
         return materiel;
     }
 
     public MaterielDTO toMaterielDTO(Materiel materiel){
         MaterielDTO materielDTO = new MaterielDTO();
         BeanUtils.copyProperties(materiel,materielDTO);
-        materielDTO.setTypeMaterielDTO(typeMaterielMapper.toTypeMaterielDTO(materiel.getTypeMateriel()));
-        materielDTO.setEtablissementDTO(etablissementMapper.toEtablissementDTO(materiel.getEtablissement()));
+        materielDTO.setTypeMateriel(typeMaterielMapper.toTypeMaterielDTO(materiel.getTypeMateriel()));
         return materielDTO;
     }
 }

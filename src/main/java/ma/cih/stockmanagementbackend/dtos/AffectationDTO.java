@@ -10,5 +10,5 @@ public class AffectationDTO {
     private LocalDate date;
     private String motif;
     private ProprietaireDTO proprietaireDTO;
-    private MaterielDTO materielDTO;
+    private MaterielDetailDTO materielDetailDTO;
 }

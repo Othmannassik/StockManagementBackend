@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 public class AffectationMapper {
     private ProprietaireMapper proprietaireMapper;
     private MaterielMapper materielMapper;
+    private MaterielDetailMapper materielDetailMapper;
     public Affectation toAffectation(AffectationDTO affectationDTO){
         Affectation affectation = new Affectation();
         BeanUtils.copyProperties(affectationDTO,affectation);
         affectation.setProprietaire(proprietaireMapper.toProprietaire(affectationDTO.getProprietaireDTO()));
-        affectation.setMateriel(materielMapper.toMateriel(affectationDTO.getMaterielDTO()));
+        affectation.setMaterielDetail(materielDetailMapper.toMaterielDetail(affectationDTO.getMaterielDetailDTO()));
         return affectation;
     }
 
@@ -23,7 +24,7 @@ public class AffectationMapper {
         AffectationDTO affectationDTO = new AffectationDTO();
         BeanUtils.copyProperties(affectation,affectationDTO);
         affectationDTO.setProprietaireDTO(proprietaireMapper.toProprietaireDTO(affectation.getProprietaire()));
-        affectationDTO.setMaterielDTO(materielMapper.toMaterielDTO(affectation.getMateriel()));
+        affectationDTO.setMaterielDetailDTO(materielDetailMapper.toMaterielDetailDTO(affectation.getMaterielDetail()));
         return affectationDTO;
     }
 }

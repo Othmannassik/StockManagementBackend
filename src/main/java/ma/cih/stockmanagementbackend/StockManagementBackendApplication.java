@@ -18,7 +18,7 @@ public class StockManagementBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(StockManagementBackendApplication.class, args);
     }
-    @Bean
+    //@Bean
     CommandLineRunner start(TypeMaterielService typeMaterielService,
                             ProprietaireService proprietaireService,
                             PrestataireService prestataireService,
@@ -26,7 +26,8 @@ public class StockManagementBackendApplication {
                             MaterielService materielService,
                             CommandeService commandeService,
                             LivraisonService livraisonService,
-                            AffectationService affectationService){
+                            AffectationService affectationService,
+                            MaterielDetailService materielDetailService){
         return args -> {
             Stream.of("Scanner", "Laptop", "Lecteur")
                     .forEach(type -> {
@@ -67,13 +68,10 @@ public class StockManagementBackendApplication {
                     .forEach(mat -> {
                         MaterielDTO materielDTO = new MaterielDTO();
                         materielDTO.setModel(mat);
-                        //materielDTO.setQuantity(29);
-                        materielDTO.setNumSerie(27292L);
-                        materielDTO.setInventaireCih(mat.toUpperCase()+"_#MAT2782");
+                        materielDTO.setQuantity(4);
                         try {
-                            materielDTO.setTypeMaterielDTO(typeMaterielService.findTypeMateriel(2L));
-                            materielDTO.setEtablissementDTO(etablissementService.findEtablissement(1L));
-                        } catch (TypeMaterielNotFoundException | EtablissementNotFoundException e) {
+                            materielDTO.setTypeMateriel(typeMaterielService.findTypeMateriel(2L));
+                        } catch (TypeMaterielNotFoundException e) {
                             e.printStackTrace();
                         }
                         materielService.addMateriel(materielDTO);
@@ -90,9 +88,17 @@ public class StockManagementBackendApplication {
                         try {
                             commandeDTO.setPrestataire(prestataireService.findPrestataire(2L));
                             commandeDTO.setMateriel(materielService.findMateriel(2L));
-                        } catch (PrestataireNotFoundException | MaterielNotFoundException e) {
+                            commandeDTO.setEtablissement(etablissementService.findEtablissement(3L));
+                        } catch (PrestataireNotFoundException | MaterielNotFoundException | EtablissementNotFoundException e) {
                             e.printStackTrace();
                         }
+
+                        /* for (int i = 0; i < commandeDTO.getQuantity(); i++) {
+                            MaterielDetailDTO materielDetailDTO = new MaterielDetailDTO();
+                            materielDetailDTO.setNumSerie("JSKJ7872");
+                            materielDetailDTO.setInventaireCih("Los298");
+                            materielDetailDTO.setMateriel(commandeDTO.getMateriel());
+                        }*/
 
                         commandeService.addCommande(commandeDTO);
                     });
@@ -118,8 +124,8 @@ public class StockManagementBackendApplication {
                         affectationDTO.setMotif(motif);
                         try {
                             affectationDTO.setProprietaireDTO(proprietaireService.findProprietaire(2L));
-                            affectationDTO.setMaterielDTO(materielService.findMateriel(1L));
-                        } catch (ProprietaireNotFoundException | MaterielNotFoundException e) {
+                            affectationDTO.setMaterielDetailDTO(materielDetailService.findMaterielDetail(1L));
+                        } catch (ProprietaireNotFoundException | MaterielDetailNotFoundException e) {
                             e.printStackTrace();
                         }
                         affectationService.addAffectation(affectationDTO);
