@@ -1,13 +1,20 @@
 package ma.cih.stockmanagementbackend.webs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
+import ma.cih.stockmanagementbackend.entities.PdfFile;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
+import ma.cih.stockmanagementbackend.services.interfaces.PdfFileService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,18 +23,32 @@ import java.util.List;
 @CrossOrigin
 public class LivraisonController {
     private LivraisonService livraisonService;
+    private PdfFileService pdfFileService;
     @PostMapping("/{commandeId}")
-    public LivraisonDTO saveLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long commandeId) throws CommandeNotFoundException {
+    public LivraisonDTO saveLivraison(@RequestParam("livraison") String livraisonJSON,
+                                      @RequestPart("file") MultipartFile file, @PathVariable Long commandeId) throws CommandeNotFoundException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        LivraisonDTO livraisonDTO = objectMapper.readValue(livraisonJSON, LivraisonDTO.class);
+        PdfFile pdfFile = pdfFileService.saveFile(file);
+        livraisonDTO.setBonLiv(pdfFile);
         return livraisonService.addLivraison(livraisonDTO, commandeId);
     }
     @PutMapping("/{livraisonId}/{commandeId}")
-    public LivraisonDTO updateLivraison(@RequestBody LivraisonDTO livraisonDTO, @PathVariable Long livraisonId, @PathVariable Long commandeId) throws CommandeNotFoundException {
+    public LivraisonDTO updateLivraison(@RequestParam("livraison") String livraisonJSON,
+                                        @RequestPart("file") MultipartFile file, @PathVariable Long livraisonId, @PathVariable Long commandeId) throws CommandeNotFoundException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        LivraisonDTO livraisonDTO = objectMapper.readValue(livraisonJSON, LivraisonDTO.class);
         livraisonDTO.setIdLiv(livraisonId);
+        pdfFileService.updateFile(file, livraisonDTO.getBonLiv().getId());
         return livraisonService.updateLivraison(livraisonDTO, commandeId);
     }
     @DeleteMapping("/{livraisonId}")
-    public void deleteLivraison(@PathVariable Long livraisonId){
+    public void deleteLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
+        LivraisonDTO livraisonDTO = livraisonService.findLivraison(livraisonId);
         livraisonService.deleteLivraison(livraisonId);
+        pdfFileService.deleteFile(livraisonDTO.getBonLiv().getId());
     }
     @GetMapping()
     public List<LivraisonDTO> livraisonList(){

@@ -13,9 +13,11 @@ import java.time.LocalDate;
 public class Livraison {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idLiv;
-    private String bonLiv;
+    private String numBonLiv;
     private LocalDate date;
     private int quantity;
+    @OneToOne
+    private PdfFile bonLiv;
     @ManyToOne @JoinColumn(name = "idCmd")
     private Commande commande;
 }

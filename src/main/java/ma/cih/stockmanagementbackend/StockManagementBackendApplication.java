@@ -108,7 +108,7 @@ public class StockManagementBackendApplication {
                         LivraisonDTO livraisonDTO = new LivraisonDTO();
                         livraisonDTO.setDate(LocalDate.now());
                         livraisonDTO.setQuantity(3);
-                        livraisonDTO.setBonLiv(bl);
+                        livraisonDTO.setNumBonLiv(bl);
                         try {
                             livraisonService.addLivraison(livraisonDTO, 2L);
                         } catch (CommandeNotFoundException e) {
