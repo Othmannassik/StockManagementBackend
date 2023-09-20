@@ -32,4 +32,19 @@ public class PdfFileServiceImpl implements PdfFileService {
     public List<PdfFile> getAllFiles() {
         return pdfFileRepository.findAll();
     }
+
+    @Override
+    public void deleteFile(String id) {
+        pdfFileRepository.deleteById(id);
+    }
+
+    @Override
+    public PdfFile updateFile(MultipartFile file, String id) throws IOException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        PdfFile pdfFile = getFile(id);
+        pdfFile.setName(fileName);
+        pdfFile.setData(file.getBytes());
+
+        return pdfFileRepository.save(pdfFile);
+    }
 }

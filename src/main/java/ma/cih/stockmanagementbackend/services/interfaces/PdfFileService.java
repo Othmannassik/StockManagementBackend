@@ -11,4 +11,6 @@ public interface PdfFileService {
     PdfFile saveFile(MultipartFile file) throws IOException;
     PdfFile getFile(String id);
     List<PdfFile> getAllFiles();
+    void deleteFile(String id);
+    PdfFile updateFile(MultipartFile file, String id) throws IOException;
 }
