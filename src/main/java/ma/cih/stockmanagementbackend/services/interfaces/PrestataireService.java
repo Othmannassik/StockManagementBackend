@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.interfaces;
 import ma.cih.stockmanagementbackend.dtos.PrestataireDTO;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface PrestataireService {
@@ -11,4 +12,5 @@ public interface PrestataireService {
     void deletePrestataire(Long id);
     PrestataireDTO findPrestataire(Long id) throws PrestataireNotFoundException;
     List<PrestataireDTO> prestataireList();
+    ByteArrayInputStream exportExcel();
 }

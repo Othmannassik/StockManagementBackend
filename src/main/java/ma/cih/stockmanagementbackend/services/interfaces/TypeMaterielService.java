@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.interfaces;
 import ma.cih.stockmanagementbackend.dtos.TypeMaterielDTO;
 import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface TypeMaterielService {
@@ -11,4 +12,5 @@ public interface TypeMaterielService {
     void deleteTypeMateriel(Long id);
     TypeMaterielDTO findTypeMateriel(Long id) throws TypeMaterielNotFoundException;
     List<TypeMaterielDTO> typeMaterielList();
+    ByteArrayInputStream exportExcel();
 }

@@ -6,6 +6,11 @@ import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import ma.cih.stockmanagementbackend.services.interfaces.TypeMaterielService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +46,16 @@ public class TypeMaterielController {
     @GetMapping("/{typeMaterielId}/materiels")
     public int nbMaterielByTypeMateriel(@PathVariable Long typeMaterielId) throws TypeMaterielNotFoundException {
         return materielService.nbMatByTypeMateriel(typeMaterielId);
+    }
+    @GetMapping("/export")
+    public ResponseEntity<Resource> getFile() {
+        String filename = "TypeMateriels.xlsx";
+        InputStreamResource file = new InputStreamResource(typeMaterielService.exportExcel());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }
