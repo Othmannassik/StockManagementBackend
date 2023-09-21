@@ -11,6 +11,11 @@ import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
 import ma.cih.stockmanagementbackend.services.interfaces.PdfFileService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,5 +66,16 @@ public class LivraisonController {
     @GetMapping("/{livraisonId}/commande")
     public CommandeDTO cmdByLivraison(@PathVariable Long livraisonId) throws LivraisonNotFoundException {
         return livraisonService.cmdByLivraison(livraisonId);
+    }
+    @GetMapping("/export")
+    public ResponseEntity<Resource> getFile() {
+        String filename = "Livraisons.xlsx";
+        InputStreamResource file = new InputStreamResource(livraisonService.exportExcel());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }

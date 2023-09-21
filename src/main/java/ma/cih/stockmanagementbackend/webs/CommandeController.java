@@ -8,6 +8,11 @@ import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.entities.PdfFile;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.*;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,5 +60,16 @@ public class CommandeController {
     @GetMapping("/{commandeId}")
     public CommandeDTO getCommande(@PathVariable Long commandeId) throws CommandeNotFoundException {
         return commandeService.findCommande(commandeId);
+    }
+    @GetMapping("/export")
+    public ResponseEntity<Resource> getFile() {
+        String filename = "Commandes.xlsx";
+        InputStreamResource file = new InputStreamResource(commandeService.exportExcel());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }

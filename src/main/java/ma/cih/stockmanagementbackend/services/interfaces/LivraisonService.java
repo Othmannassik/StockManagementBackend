@@ -5,6 +5,7 @@ import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface LivraisonService {
@@ -14,4 +15,5 @@ public interface LivraisonService {
     LivraisonDTO findLivraison(Long id) throws LivraisonNotFoundException;
     List<LivraisonDTO> livraisonList();
     CommandeDTO cmdByLivraison(Long id) throws LivraisonNotFoundException;
+    ByteArrayInputStream exportExcel();
 }

@@ -3,6 +3,7 @@ package ma.cih.stockmanagementbackend.services.interfaces;
 import ma.cih.stockmanagementbackend.dtos.ProprietaireDTO;
 import ma.cih.stockmanagementbackend.exceptions.ProprietaireNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface ProprietaireService {
@@ -11,4 +12,5 @@ public interface ProprietaireService {
     void deleteProprietaire(Long id);
     ProprietaireDTO findProprietaire(Long id) throws ProprietaireNotFoundException;
     List<ProprietaireDTO> proprietaireList();
+    ByteArrayInputStream exportExcel();
 }

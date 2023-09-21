@@ -6,6 +6,7 @@ import ma.cih.stockmanagementbackend.exceptions.MaterielNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.TypeMaterielNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface MaterielService {
@@ -16,4 +17,5 @@ public interface MaterielService {
     List<MaterielDTO> materielList();
     //int nbMatByEtablissement(Long id) throws EtablissementNotFoundException;
     int nbMatByTypeMateriel(Long id) throws TypeMaterielNotFoundException;
+    ByteArrayInputStream exportExcel();
 }

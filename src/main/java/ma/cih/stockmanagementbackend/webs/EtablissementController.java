@@ -5,6 +5,11 @@ import ma.cih.stockmanagementbackend.dtos.EtablissementDTO;
 import ma.cih.stockmanagementbackend.exceptions.EtablissementNotFoundException;
 import ma.cih.stockmanagementbackend.services.interfaces.EtablissementService;
 import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +41,16 @@ public class EtablissementController {
     @GetMapping("/{etablissementId}")
     public EtablissementDTO getEtablissement(@PathVariable Long etablissementId) throws EtablissementNotFoundException {
         return etablissementService.findEtablissement(etablissementId);
+    }
+    @GetMapping("/export")
+    public ResponseEntity<Resource> getFile() {
+        String filename = "Etablissements.xlsx";
+        InputStreamResource file = new InputStreamResource(etablissementService.exportExcel());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
     }
 }

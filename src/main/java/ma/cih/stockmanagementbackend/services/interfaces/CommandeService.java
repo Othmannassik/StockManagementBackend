@@ -5,6 +5,7 @@ import ma.cih.stockmanagementbackend.entities.Prestataire;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public interface CommandeService {
@@ -14,4 +15,5 @@ public interface CommandeService {
     CommandeDTO findCommande(Long id) throws CommandeNotFoundException;
     List<CommandeDTO> commandeList();
     int nbCmdByPrestataire(Long id) throws PrestataireNotFoundException;
+    ByteArrayInputStream exportExcel();
 }
