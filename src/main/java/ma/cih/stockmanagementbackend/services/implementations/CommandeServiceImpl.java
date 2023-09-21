@@ -24,25 +24,13 @@ import java.util.List;
 public class CommandeServiceImpl implements CommandeService {
     private CommandeRepository commandeRepository;
     private CommandeMapper commandeMapper;
-    private MaterielDetailService materielDetailService;
-    private MaterielService materielService;
-    private MaterielMapper materielMapper;
     private PrestataireService prestataireService;
     private PrestataireMapper prestataireMapper;
     @Override
     public CommandeDTO addCommande(CommandeDTO commandeDTO){
         Commande commande = commandeMapper.toCommande(commandeDTO);
         commande.setStatus(StatusCmd.CREATED);
-        Commande savedCmd = commandeRepository.save(commande);
-
-        savedCmd.getMateriel().setQuantity(savedCmd.getMateriel().getQuantity() + commandeDTO.getQuantity());
-        materielService.updateMateriel(materielMapper.toMaterielDTO(savedCmd.getMateriel()));
-
-        for (int i = 0; i < commandeDTO.getQuantity(); i++) {
-            MaterielDetailDTO materielDetailDTO = new MaterielDetailDTO();
-            materielDetailDTO.setMaterielDTO(commandeDTO.getMateriel());
-            materielDetailService.addMaterielDetail(materielDetailDTO);
-        }
+        commandeRepository.save(commande);
         return commandeDTO;
     }
 

@@ -3,20 +3,26 @@ package ma.cih.stockmanagementbackend.services.implementations;
 import lombok.AllArgsConstructor;
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.dtos.LivraisonDTO;
+import ma.cih.stockmanagementbackend.dtos.MaterielDetailDTO;
 import ma.cih.stockmanagementbackend.entities.Commande;
 import ma.cih.stockmanagementbackend.entities.Livraison;
+import ma.cih.stockmanagementbackend.enums.StatusCmd;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.LivraisonNotFoundException;
 import ma.cih.stockmanagementbackend.mappers.CommandeMapper;
 import ma.cih.stockmanagementbackend.mappers.LivraisonMapper;
+import ma.cih.stockmanagementbackend.mappers.MaterielMapper;
 import ma.cih.stockmanagementbackend.repositories.LivraisonRepository;
 import ma.cih.stockmanagementbackend.services.interfaces.CommandeService;
 import ma.cih.stockmanagementbackend.services.interfaces.LivraisonService;
+import ma.cih.stockmanagementbackend.services.interfaces.MaterielDetailService;
+import ma.cih.stockmanagementbackend.services.interfaces.MaterielService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,12 +32,33 @@ public class LivraisonServiceImpl implements LivraisonService {
     private CommandeService commandeService;
     private CommandeMapper commandeMapper;
     private LivraisonMapper livraisonMapper;
+    private MaterielService materielService;
+    private MaterielMapper materielMapper;
+    private MaterielDetailService materielDetailService;
     @Override
     public LivraisonDTO addLivraison(LivraisonDTO livraisonDTO, Long commandeId) throws CommandeNotFoundException {
         Livraison livraison = livraisonMapper.toLivraison(livraisonDTO);
         CommandeDTO commandeDTO = commandeService.findCommande(commandeId);
         livraison.setCommande(commandeMapper.toCommande(commandeDTO));
         livraisonRepository.save(livraison);
+
+        livraison.getCommande().getMateriel().setQuantity(livraison.getCommande().getMateriel().getQuantity() + livraisonDTO.getQuantity());
+        materielService.updateMateriel(materielMapper.toMaterielDTO(livraison.getCommande().getMateriel()));
+
+        for (int i = 0; i < livraisonDTO.getQuantity(); i++) {
+            MaterielDetailDTO materielDetailDTO = new MaterielDetailDTO();
+            materielDetailDTO.setMaterielDTO(commandeDTO.getMateriel());
+            materielDetailService.addMaterielDetail(materielDetailDTO);
+        }
+        int count = commandeDTO.getLivraisonList().stream()
+                .collect(Collectors.summingInt(LivraisonDTO::getQuantity))
+                .intValue();
+        if ((livraisonDTO.getQuantity() + count) == commandeDTO.getQuantity()){
+            commandeDTO.setStatus(StatusCmd.DELIVERED);
+        } else {
+            commandeDTO.setStatus(StatusCmd.PENDING);
+        }
+        commandeService.updateCommande(commandeDTO);
         return livraisonDTO;
     }
 
