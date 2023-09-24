@@ -13,4 +13,6 @@ public interface MaterielDetailService {
     MaterielDetailDTO findMaterielDetail(Long id) throws MaterielDetailNotFoundException;
     List<MaterielDetailDTO> materielDetailList();
     List<MaterielDetailDTO> materielDetailListByMat(Long id);
+    Long countMateriels();
+    long countMaterielsNotUsed();
 }

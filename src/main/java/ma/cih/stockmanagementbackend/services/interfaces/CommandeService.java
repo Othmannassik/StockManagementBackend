@@ -2,6 +2,7 @@ package ma.cih.stockmanagementbackend.services.interfaces;
 
 import ma.cih.stockmanagementbackend.dtos.CommandeDTO;
 import ma.cih.stockmanagementbackend.entities.Prestataire;
+import ma.cih.stockmanagementbackend.enums.StatusCmd;
 import ma.cih.stockmanagementbackend.exceptions.CommandeNotFoundException;
 import ma.cih.stockmanagementbackend.exceptions.PrestataireNotFoundException;
 
@@ -16,4 +17,5 @@ public interface CommandeService {
     List<CommandeDTO> commandeList();
     int nbCmdByPrestataire(Long id) throws PrestataireNotFoundException;
     ByteArrayInputStream exportExcel();
+    int pendingCount();
 }

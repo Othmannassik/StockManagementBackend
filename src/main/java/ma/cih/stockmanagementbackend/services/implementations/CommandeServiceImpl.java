@@ -113,4 +113,9 @@ public class CommandeServiceImpl implements CommandeService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int pendingCount() {
+        return commandeRepository.countByStatus(StatusCmd.PENDING);
+    }
 }

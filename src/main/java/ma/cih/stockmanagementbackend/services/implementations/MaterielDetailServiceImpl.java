@@ -67,4 +67,14 @@ public class MaterielDetailServiceImpl implements MaterielDetailService {
                 .map(matDet -> materielDetailMapper.toMaterielDetailDTO(matDet))
                 .toList();
     }
+
+    @Override
+    public Long countMateriels() {
+        return materielDetailRepository.count();
+    }
+
+    @Override
+    public long countMaterielsNotUsed() {
+        return materielDetailRepository.countMaterielsNotUsed();
+    }
 }

@@ -39,4 +39,13 @@ public class MaterielDetailController {
     public List<MaterielDetailDTO> getMaterielDetailsByMat(@PathVariable Long materielDetailId) {
         return materielDetailService.materielDetailListByMat(materielDetailId);
     }
+    @GetMapping("/count")
+    public Long countMateriles() {
+        return materielDetailService.countMateriels();
+    }
+
+    @GetMapping("/notUsedMat")
+    public Long countMaterielsNotUsed() {
+        return materielDetailService.countMaterielsNotUsed();
+    }
 }

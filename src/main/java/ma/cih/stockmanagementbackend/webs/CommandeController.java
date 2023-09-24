@@ -72,4 +72,8 @@ public class CommandeController {
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
     }
+    @GetMapping("/pending")
+    public int pendingCmdCount(){
+        return commandeService.pendingCount();
+    }
 }
